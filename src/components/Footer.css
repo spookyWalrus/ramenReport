@@ -1,0 +1,23 @@
+
+.footer{
+  background-color: #572008;
+  width: 100%;
+  height: 50px;
+  margin-top: auto;
+/*  position: absolute;*/
+	flex-shrink: 0;
+}
+
+.footLinks{
+	padding: 15px;
+	font-size: 0.9em;
+	color: #c46908;
+	text-decoration: none;
+}
+ul{
+	margin: 1% 1% 1% 5%;
+}
+
+ul li{
+	display: inline;
+}
