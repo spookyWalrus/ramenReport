@@ -1,23 +1,35 @@
-import React,{Component} from 'react';
-import Header from '../components/Header';
+import {createBrowserRouter, 
+         createRoutesFromElements,
+         RouterProvider,
+         Route } from 'react-router-dom';
+
+//Layouts
+import RootLayout from '../layout/RootLayout';
+
+//pages
 // import Banner from '../components/Banner';
-import Descript from '../components/Descript';
-import Report from '../components/Report';
-import Footer from '../components/Footer';
+import Home from '../pages/Home';
+import Report from '../pages/Report';
+import Ratings from '../pages/Ratings';
+import ErrorPage from '../pages/ErrorPage';
 import './App.css';
 
-class App extends Component{
-   render(){
-      return (
-         <div className="theBody">
-               <Header />
-               {/*<Banner />*/}
-               <Descript />
-               {/*<Report />*/}
-               <Footer />
-         </div>
-        
-      );
-   }
+const theRouter = createBrowserRouter(
+   createRoutesFromElements(
+      <Route path="/" element={<RootLayout />}>
+         <Route index element={<Home />} />
+         <Route path="report" element={<Report />} />
+         <Route path="ratings" element={<Ratings />} />
+         <Route path="*" element={<ErrorPage />} />
+      </Route>
+   )
+);
+
+function App() {
+   return (
+      <RouterProvider router={theRouter} />
+   );
 }
+
 export default App;
+
