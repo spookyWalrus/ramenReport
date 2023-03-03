@@ -1,0 +1,22 @@
+#know{
+	display: flex;
+}
+
+.KnowBack {
+	background-color: #6f550b;
+	position: relative;
+	display: block;
+	padding: 10%;
+	height:100vh;
+/*		top: 98px;*/
+}
+
+.KnowBack > p{
+  margin-bottom: 0;
+}
+
+#know:target{
+	display: block;
+	top: 250px;
+	background-color: red;
+}
