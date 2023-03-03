@@ -1,0 +1,23 @@
+
+
+.theBody {
+/*  min-height: 100%;*/
+    height: 100vh;
+/*  margin: 0;*/
+   display: flex;
+   flex-direction: column;
+/*overflow: hidden;*/
+}
+
+@media only screen and (max-width: 550px){
+  .theBody{
+/*    padding-top: 62px;*/
+  }
+}
+
+@font-face{
+   font-family: 'BailamoreFPU';
+   src: local('BailamoreFPU'), url(./fonts/BailamoreFPU.ttf) format('truetype');
+}
+
+

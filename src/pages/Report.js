@@ -1,29 +1,97 @@
-import {LinkContainer} from 'react-router-bootstrap';
-import {NavLink} from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+import React, { useState, } from "react";
+import { Form,useActionData,redirect } from "react-router-dom";
+
 import './Report.css';
 
-const Report = () => {
+import ReportHeader from './ReportHeader';
+import StarRating from '../components/StarRating';
+
+// const StarSet = createContext();
+
+export default function Report() {
+   const [noodleRate, setNoodleRate] = useState(0);
+   const [soupRate, setSoupRate] = useState(0);
+   const [toppRate,setToppRate] =useState(0);
+
+   const rateNoodle = {noodleRate,setNoodleRate};
+   const rateSoup = {soupRate,setSoupRate};
+   const rateTopp = {toppRate,setToppRate};
+
+   console.log('noodle stars: ',noodleRate, 'soup stars: ',soupRate,'toppings stars: ',toppRate);
+
+  const data = useActionData(); 
 	return(
 		<div className="reportBack">
-			<div className="reportPage">
-				<h1 className="reportHeading">Ramen Report
-				</h1>
-				<p className="lineBreak"></p>
-				<h5>It's the moment where you want to share your thoughts on the amazing bowl of Ramen you just ate. But wait! How do I rate something that is as complex and varied as a bowl of Ramen? How can one bowl of Ramen compare to another when there are so many aspects to Ramen? If you are unsure about what those aspects are, read up on more RAMEN KNOWLEDGE. 
-				</h5>
-				<p className="lineBreak"></p>
-				<div className="reportButtBlock">
-					<LinkContainer to="/know">
-						<Button  variant="info" className="toKnow button">Get more Ramen Knowledge</Button>
-					</LinkContainer>
-					<LinkContainer to="/report">
-						<Button variant="info" className="toReport button">I got this, Do a Report now!</Button>
-					</LinkContainer>
-				</div>
-			</div>
+			<ReportHeader />
+			<section className="reportPage">
+				{/*<h2 className="reportHeading">Do a Ramen Report</h2> */}
+					<div className="reportForm">
+						<Form method="post" action="/report">
+							<div className="starBack">
+								<label>
+									<span>Rate the noodles</span>
+									<StarRating rate={rateNoodle} num={1}>
+									</StarRating>
+									<input type="hidden" name="noodles" value ={noodleRate} />
+								</label>
+							</div>
+							<div className="starBack">
+								<label>
+									<span>Rate the Soup</span>
+								<StarRating rate={rateSoup} num={2} >
+									</StarRating>
+									<input type="hidden" name="soup" value ={soupRate} />
+								</label>
+							</div>
+							<div className="starBack">
+								<label>
+									<span>Rate the Toppings</span>
+								<StarRating rate={rateTopp} num={3} >
+									</StarRating>
+									<input type="hidden" name="toppings" value ={soupRate} />
+								</label>
+							</div>
+							<label>
+								<span>Your email:</span>
+								<input type="email" name="email" required />
+							</label>
+							<label>
+								<span>Comments - the specifics of your experience</span>
+								<textarea name="comments" required></textarea>
+							</label>
+						<button className="reportSubmitButton">Submit</button>
+
+						{data && data.error && <p>{data.error}</p>}
+						</Form>
+					</div>
+			</section>
 		</div>
 	)
 }
 
-export default Report;
+export const sendReportAction = async({ request })=> {
+  const data = await request.formData();
+
+  const submission = {
+    email: data.get('email'),
+    comments: data.get('comments'),
+    noodles: data.get('noodles'),
+    soup: data.get('soup'),
+    toppings: data.get('toppings'),
+  }
+  console.log(submission)
+  // send your post request
+
+  if (submission.comments.length < 10) {
+    return {error: 'Message must be over 10 chars long.'}
+  }
+
+  // redirect the user
+  // (redirect('/'), 
+   function good(){
+  	 alert("success, page goes to party happy page");
+  	 return redirect('/');
+  }
+  return  good();
+}
+
