@@ -7,6 +7,9 @@ import { ScrollWithOffset} from '../components/CheckNav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../img/ramenLogo.gif';
 
+// import {DataContext} from '../App';
+
+
 //components
 import UserInOut from '../components/UserInOut';
 import Footer from '../components/Footer';
@@ -14,8 +17,12 @@ import Footer from '../components/Footer';
 import './RootLayout.css';
 
 
-export default function RootLayout({userStatus}){
+export default function RootLayout({props}){
 	const [active, setActive] = useState(); // use state to turn 'active' status on/off with buggy NavHashLink
+	// const location = useLocation();
+	// const data =  useContext(DataContext);
+
+	// console.log('the context data: ',data);
 	// const [route,setRoute] = useState('signin');
 	// const [signedIn,setSignedIn] = useState(false);
 
@@ -38,22 +45,22 @@ export default function RootLayout({userStatus}){
 	}
 
 // change state based on what page youre on
-console.log(signedIn);
-	function routeChange(route){
-      if(route === 'signout'){
-         setRoute('signin')
-      }else if (route === 'home'){
-         setSignedIn({isSignedIn: true})
-      }
+// console.log(signedIn);
+// 	function routeChange(route){
+//       if(route === 'signout'){
+//          setRoute('signin')
+//       }else if (route === 'home'){
+//          setSignedIn({isSignedIn: true})
+      // }
         // setState({route: route});
-	}
+	// }
 	
 	return(
 		<div className="rootLayout">
 			<header>
-				<Navbar  expand="md" className="myNav" fixed="top" collapseOnSelect expand="md">
+				<Navbar className="myNav" fixed="top" collapseOnSelect expand="md">
 					<Container fluid id="theHeaderContainer">	
-							 <Nav.Link 
+							<Nav.Link 
 							 		eventKey="0" 
 							 		className={actionHome}
 							> 	
@@ -101,7 +108,7 @@ console.log(signedIn);
 									   className="dropdown"
 									   id="dropDownNav"
 									   >
-										  <UserInOut setActive={setActive} signedIn={userStatus}
+										  <UserInOut setActive={setActive} 
 											  />
 									   </NavDropdown>
 									</Nav>
