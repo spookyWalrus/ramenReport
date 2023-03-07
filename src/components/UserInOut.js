@@ -1,24 +1,30 @@
 import {Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
+import {ScrollWithOffset,DataContext} from './CheckNav';
+import {useContext} from 'react';
 
 
+export default function UserInOut({setActive}){
+	const {signedIn,setSignedIn} = useContext(DataContext);
 
-export default function UserInOut({signedIn,setActive}){
 	if(signedIn){
 		return(
-			<LinkContainer to="/home" onClick={()=>{setActive(4); setSignedIn(false) }}>
+			<LinkContainer to="/" 
+				// scroll={ScrollWithOffset} 
+				onClick={()=>{setActive(4); setSignedIn(false) }}>
 			  <Nav.Link 
 			  active={false} 
 			  eventKey="4"
+				// scroll={ScrollWithOffset}
 				>
-				Sign Out
+				Log Out
 				</Nav.Link>
 			</LinkContainer>
 		)
 	}else{
 		return(
 			<div id="userDropMenu">
-			<LinkContainer to="login" onClick={()=>setActive(4)} >
+			<LinkContainer to="login" state={{here: "login"}} onClick={()=>setActive(4)} >
 			  <Nav.Link 
 			  active={false} 
 			  eventKey="4"
@@ -26,37 +32,16 @@ export default function UserInOut({signedIn,setActive}){
 				Log In
 				</Nav.Link>
 			</LinkContainer>
-		{/*	<LinkContainer to="report" onClick={()=>setActive(4)} >
+			<LinkContainer to="register" state={{here: "register"}} onClick={()=>setActive(4)} >
 			  <Nav.Link 
 			  active={false} 
 			  eventKey="4"
 				>
 				Register
 				</Nav.Link>
-			</LinkContainer>*/}
+			</LinkContainer>
 			</div>
 		)
 	}
 }
 
-
-// 		if(isSignedIn){
-// 		return(
-// 			<Nav.Link to='/#home'
-// 				onClick={()=>{routeChange('signout')}}
-// 				style={{display: 'flex', justifyContent: 'flex-end'}}
-// 			>
-// 				<p className=''>Sign out</p>
-// 			</Nav.Link>
-// 		)
-// 	}else{
-// 		return(
-// 			<Nav.Link to="login"
-// 					className='nav-link'>Sign In
-// 				{/*<p onClick={()=>{routeChange('register')}}
-// 					className='nav-link'>Register
-// 				</p>*/}
-// 			</Nav.Link>
-// 		)
-// 	}
-// }
