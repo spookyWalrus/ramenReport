@@ -153,6 +153,9 @@ main{
   background-color: #572008 !important;
   border: 1px solid #752b0a;
   border-top: none;
+  padding-top: 0;
+  padding-bottom: 0px;
+  height: auto;
 
 }
 #userDropMenu{
