@@ -1,30 +1,24 @@
-import { Outlet} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 import {useState} from 'react';
-import { NavHashLink} from 'react-router-hash-link';
+import { HashLink} from 'react-router-hash-link';
 import {Container,Navbar, Nav,NavDropdown} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
-import { ScrollWithOffset} from '../components/CheckNav';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from '../img/ramenLogo.gif';
-
-// import {DataContext} from '../App';
 
 
 //components
+import { ScrollWithOffset} from '../components/CheckNav';
 import UserInOut from '../components/UserInOut';
 import Footer from '../components/Footer';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from '../img/ramenLogo.gif';
 import './RootLayout.css';
 
 
-export default function RootLayout({props}){
+export default function RootLayout(){
 	const [active, setActive] = useState(); // use state to turn 'active' status on/off with buggy NavHashLink
 	// const location = useLocation();
 	// const data =  useContext(DataContext);
-
-	// console.log('the context data: ',data);
-	// const [route,setRoute] = useState('signin');
-	// const [signedIn,setSignedIn] = useState(false);
 
 // change class names when # link clicked
 	let actionKnow,actionHome;
@@ -40,7 +34,7 @@ export default function RootLayout({props}){
 			actionHome = '';
 		}
 	}
-	if (active){
+	if ((active >= 0) || active === true){
 		setClass();
 	}
 
@@ -64,13 +58,12 @@ export default function RootLayout({props}){
 							 		eventKey="0" 
 							 		className={actionHome}
 							> 	
-								<NavHashLink 
-								active={false}
+								<HashLink 
+								// isActive={false}
 								smooth
 								id="homeLink" 
 								to="/#home"
 								onClick={()=>setActive(0)}
-								// className={actionHome}
 								 >
 									<Navbar.Brand >
 										<div className="logo-title">
@@ -78,7 +71,7 @@ export default function RootLayout({props}){
 											<p className="header-title">tRR</p>
 										</div>
 									</Navbar.Brand>
-								</NavHashLink>
+								</HashLink>
 								</Nav.Link>
 							<Navbar.Toggle aria-controls="basic-navbar-nav"  id="my-navbar-icon" />
 								<Navbar.Collapse id="basic-navbar-nav" className="myMenu" >
@@ -88,7 +81,7 @@ export default function RootLayout({props}){
 										</Nav.Link>
 										</LinkContainer>
 										<LinkContainer to="ratings" onClick={()=>setActive(2)} >
-											<Nav.Link  active={false} eventKey="2" >View Ratings 
+											<Nav.Link  active={false} eventKey="2" isactive="null">View Ratings 
 											</Nav.Link>
 										</LinkContainer>
 										<Nav.Link eventKey="3" 
@@ -96,12 +89,13 @@ export default function RootLayout({props}){
 											active={false} 
 											onClick={()=>setActive(1)}
 											id="navKnowLink">
-											<NavHashLink smooth  
+											<HashLink smooth  
+											// active={false}
 											to="/#know" 
 											id="knowLink" 
 											scroll={ScrollWithOffset}
 											>Read more about Ramen
-										  </NavHashLink>
+										  </HashLink>
 									   </Nav.Link>
 									   <NavDropdown
 									   title="User account"
