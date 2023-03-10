@@ -42,8 +42,13 @@ const theRouter = createBrowserRouter(
 );
 
 export default function App() {
-   const [signedIn,setSignedIn] = useState();
-   // const status = {signedIn,setSignedIn};
+   const [signedIn,setSignedIn] = useState();// status hook
+   const [userStat, setUserStat] = useState();
+
+   const contextProps = {
+      signed : {signedIn,setSignedIn},
+      user : {userStat,setUserStat}
+   }
 
    if(signedIn === true){ 
       console.log('signed TRUE status: ',signedIn);
@@ -52,7 +57,7 @@ export default function App() {
    }
 
    return (
-      <DataContext.Provider value={{signedIn,setSignedIn}}>
+      <DataContext.Provider value={{contextProps}}>
          <RouterProvider router={theRouter} />
       </DataContext.Provider>
    );
