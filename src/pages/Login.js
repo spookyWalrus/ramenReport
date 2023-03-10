@@ -5,25 +5,23 @@ import {DataContext} from '../components/CheckNav';
 export default function Login(){
 	const location = useLocation();
 	const logdat = useActionData();
-	const {signedIn,setSignedIn} = useContext(DataContext);
+	const {contextProps} = useContext(DataContext);
+	const{signedIn, setSignedIn} = contextProps.signed;
+	const {setUserStat} = contextProps.user;
 	const goHome = useNavigate();
-	// console.log('you are here: ',location);	
-		// if(logdat){
-		// 	if(logdat.status === true){ 
-		// 		setSignedIn(true);
-		// 		return goHome('/');
-		// 	}
 	let message = '';
 
+	// set state to true when login succesful, otherwise show error message
 		useEffect(()=>{
 			if(logdat){
+				console.log('is logdat? ',logdat);
 				if(logdat.status === true ){
 					setSignedIn(true);
+					setUserStat(logdat.userstat);
 					return goHome('/');
 				}else if((logdat.status === false )&& location.pathname === 'register'){
 					return message = logdat.errorReg;
 				}else if((logdat.status === false )&& location.pathname === 'login'){
-					console.log('login error: ',logdat);
 					return message = logdat.error;
 				}
 			}

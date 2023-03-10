@@ -5,21 +5,31 @@ import {useContext} from 'react';
 
 
 export default function UserInOut({setActive}){
-	const {signedIn,setSignedIn} = useContext(DataContext);
+	const {contextProps} = useContext(DataContext);
+	const {signedIn,setSignedIn} = contextProps.signed;
+	const {userStat} = contextProps.user;
+	console.log(userStat);
+
 
 	if(signedIn){
 		return(
-			<LinkContainer to="/" 
-				// scroll={ScrollWithOffset} 
-				onClick={()=>{setActive(4); setSignedIn(false) }}>
-			  <Nav.Link 
-			  active={false} 
-			  eventKey="4"
-				// scroll={ScrollWithOffset}
-				>
-				Log Out
-				</Nav.Link>
-			</LinkContainer>
+			<div id="userDropMenu">
+				<div>
+					<p>User name: {userStat.name}</p>
+					<p>Number of reports made: {userStat.count}</p>
+				</div>
+				<LinkContainer to="/" 
+					// scroll={ScrollWithOffset} 
+					onClick={()=>{setActive(4); setSignedIn(false) }}>
+				  <Nav.Link 
+				  active={false} 
+				  eventKey="4"
+					// scroll={ScrollWithOffset}
+					>
+					Log Out
+					</Nav.Link>
+				</LinkContainer>
+			</div>
 		)
 	}else{
 		return(
