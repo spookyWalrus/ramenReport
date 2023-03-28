@@ -4,27 +4,29 @@ import {
       RouterProvider,
       Route } from 'react-router-dom';
 // import React, {useEffect} from 'react';
-import {useState} from 'react';
+import {useState,createContext} from 'react';
 
 //Layouts
 import RootLayout from './layout/RootLayout';
 
 //pages
 import Home from './pages/Home';
-import Report, {sendReportAction} from './pages/Report';
 import Ratings from './pages/Ratings';
 import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
+import Report from './pages/Report';
 // import Register from './pages/Register';
 
 //components
 import Know from './components/Know';
-import {DataContext,sendLoginAction} from './components/CheckNav';
-// import SendLoginAction from './components/SendLoginAction';
+// import {DataContext,sendLoginAction} from './components/CheckNav';
+import {sendLoginAction} from './components/CheckNav';
+import {sendReportAction} from './components/ReportMath';
 
 //css
 import './App.css';
 
+const DataContext = createContext({});
 
 const theRouter = createBrowserRouter(
    createRoutesFromElements(
@@ -43,7 +45,7 @@ const theRouter = createBrowserRouter(
 
 export default function App() {
    const [signedIn,setSignedIn] = useState();// status hook
-   const [userStat, setUserStat] = useState();
+   const [userStat, setUserStat] = useState(0);
 
    const contextProps = {
       signed : {signedIn,setSignedIn},
@@ -51,9 +53,10 @@ export default function App() {
    }
 
    if(signedIn === true){ 
-      console.log('signed TRUE status: ',signedIn);
+      // console.log('signed TRUE status: ',signedIn);
    }else{
-      console.log('signed FALSE status: ',signedIn);
+      // console.log('signed FALSE status: ',signedIn);
+      // alert('See you at your next bowl of ramen!');
    }
 
    return (
@@ -63,3 +66,4 @@ export default function App() {
    );
 }
    
+export {DataContext}
