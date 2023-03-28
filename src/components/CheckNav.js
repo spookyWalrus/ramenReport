@@ -1,6 +1,6 @@
 import {createContext} from 'react';
 // set Datacontext for log in status
-const DataContext = createContext({});
+// const DataContext = createContext({});
 
 // scroll behaviour
 const ScrollWithOffset = (el) => {
@@ -8,9 +8,11 @@ const ScrollWithOffset = (el) => {
     const yOffset = -40; 
     window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
 }
-export {ScrollWithOffset,DataContext};
+// export {ScrollWithOffset,DataContext};
+export {ScrollWithOffset};
 
-// login user
+
+// ===============  login user / fetch request ============
 export const sendLoginAction = async({ request })=> {
 
     const logindata = await request.formData();
@@ -23,7 +25,7 @@ export const sendLoginAction = async({ request })=> {
     }
 
     let response;
-    function actionReturn(userstat){ // 
+    function actionReturn(userstat){ // callback when fetch for user login is succesful
         var size = Object.keys(userstat).length;
         console.log('size: ',size);
         // if(login.logReg === 'login'){
@@ -33,9 +35,6 @@ export const sendLoginAction = async({ request })=> {
                     userstat: userstat,
                     status: true
                 }
-            // console.log(response);
-            return response;
-
         }else if (login.logReg === 'register'){
             response = { 
                 status: true,
@@ -49,10 +48,13 @@ export const sendLoginAction = async({ request })=> {
         return response;
     }
 
-    function conOut(go){
-        console.log('json response name: ',go.name);
-        console.log('json response count: ',go.count);
+    function theError(){
+        response =  {
+                status: false
+            }
+        return response;
     }
+  
 
     // send your post request via fetch() and verify credentials
     if (login.logReg === "login"){
@@ -61,70 +63,59 @@ export const sendLoginAction = async({ request })=> {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    user: login.user,
+                    email: login.email,
                     password: login.password,
             })
         })
-        .then(res => res.json())
-        .then(data => {
-            // actionReturn(data) })
-            return response = {
-                    alert: alert(" successful login"),
-                    userstat: data,
-                    status: true
-                }
-            // console.log(response);
+        .then(res => {
+            if(res.ok){ // check for succesful credentials
+                return res.json();
+            }
+            throw new Error(res.status);
         })
-        // .catch((error)=>{actionReturn(false)})
-        .catch(console.error)
+        .then(data => {
+            return response = {
+                        alert: alert(" successful login"),
+                        userstat: data,
+                        status: true
+                    }
+        })
+        .catch((error) => {
+            console.log(error);
+            return response = {error: 'Logging error'};
+        })
+
     }else if(login.logReg === "register"){
     return fetch('http://localhost:3000/register', {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     email: login.email,
-                    user: login.user,
+                    name: login.user,
                     password: login.password
                 })
         })
-        .then(response => response.json())
-        // .then(res => conOut(res) )
-        .then(actionReturn(true) )
-        .then(res => conOut(res) )
-
-        
-        // .catch((error)=> actionReturn('pants')
-            // error.status(400).json('error registering') 
-        // )
-        // .then((resp) =>{
-        //     if(!resp.ok){
-        //         throw Error(resp.status);
-        //         actionReturn('pants');
-        //         // return resp.statusText;
-        //     }
-        // })
-        // .then(action)
-        .catch(resp=>console.log(resp.status, resp.statusText))
-        // .catch(error => {response.status(400).json('cannot connect to server')})
-        // .catch(response => {response.status(500).json('cannot register, server error')})
-
-
-
-
-            // return {errorReg: 'Uhhh, there was an error registering'}
-        // }
+        .then(res => {
+                if(res.ok){ // check for succesful credentials
+                    return res.json();
+                }
+                throw new Error(res.status);
+        })
+        .then(data => {
+            return response = { 
+                status: true,
+                userstat: data,
+                alert: alert(" Registeration successful")
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            return response = {regerror: 'Registration error'};
+        })
     }
 
    
-    return response;
-
-    // if (response){
-    //       return { status: true,
-    //                 alert: alert("successful login")}
-    // }else{
-    //         return {error: 'Uh-oh, there was an error logging in'}
-    // }
-    // below should be catch error statement for unsuccesful login
+    // return response;
 }
 
 

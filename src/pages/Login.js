@@ -1,6 +1,7 @@
 import { Form, useActionData,useNavigate,useLocation} from "react-router-dom";
 import {useContext,useEffect} from 'react';
-import {DataContext} from '../components/CheckNav';
+// import {DataContext} from '../components/CheckNav';
+import {DataContext} from '../App';
 
 export default function Login(){
 	const location = useLocation();
@@ -13,19 +14,19 @@ export default function Login(){
 
 	// set state to true when login succesful, otherwise show error message
 		useEffect(()=>{
-			if(logdat){
-				console.log('is logdat? ',logdat);
+			if(logdat != undefined){
+				// console.log('is logdat? ',logdat);
 				if(logdat.status === true ){
 					setSignedIn(true);
 					setUserStat(logdat.userstat);
 					return goHome('/');
 				}else if((logdat.status === false )&& location.pathname === 'register'){
-					return message = logdat.errorReg;
+					return message = logdat.regerror;
 				}else if((logdat.status === false )&& location.pathname === 'login'){
 					return message = logdat.error;
 				}
 			}
-		})
+		},[logdat])
 
 	
 
@@ -55,7 +56,7 @@ export default function Login(){
 							<button type="submit" className="reportSubmitButton">Sign me up!</button>
 						</div>
 					</Form>
-                {logdat && logdat.errorReg && <p>{logdat.errorReg}</p>}
+                {logdat && logdat.regerror && <p>{logdat.regerror}</p>}
 				</div>
 			</div>
 		)
@@ -68,8 +69,8 @@ export default function Login(){
 				<div className="reportPage">
 					<Form method="post" action="/login">
 						<label>
-							<span>User name</span>
-							<input type="text" name="userName" required />
+							<span>Email</span>
+							<input type="text" name="email" required />
 						</label>
 						<label>
 							<span>Password</span>
