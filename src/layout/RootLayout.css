@@ -160,4 +160,12 @@ main{
 }
 #userDropMenu{
 /*  transform: -10px 40px;*/
+  color: #f0bf0e;
+  display: block;
+  text-align: center;
+  border: solid 0.5px #f0bf0e;
+  border-radius:6px;
+}
+.userStatNum{
+  color: #00e7ff;
 }
