@@ -21,6 +21,9 @@ const StarRating = ({rate,num}) => {
    }else if(num === 3){
       rating = rate.toppRate;
       setRating = rate.setToppRate;
+   }else if(num === 4){
+      rating = rate.expRate;
+      setRating = rate.setExpRate;
    }
    
    return (
