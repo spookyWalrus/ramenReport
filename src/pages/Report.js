@@ -3,9 +3,11 @@ import { Form,useActionData,redirect } from "react-router-dom";
 import ReportHeader from './ReportHeader';
 import StarRating from '../components/StarRating';
 import {DataContext} from '../App';
+import MapContainer from '../components/mapCoding/mapCode-geo';
 
 import './Report.css';
 // const StarSet = createContext();
+// import ramenPlaces from '../json/json2DB.js';
 
 export default function Report() {
    const [noodleRate, setNoodleRate] = useState(0);
@@ -93,21 +95,24 @@ export default function Report() {
 		}
 	},[reportdata])
 
+	// let map = TheMap();
+
 
 	return(
 		<div className="reportBack">
 			<ReportHeader />
 			<section className="reportPage">
 				{/*<h2 className="reportHeading">Do a Ramen Report</h2> */}
+				<MapContainer />
 					<div className="reportForm">
 						<Form method="post" action="/report">
 							<div className="starBack">
-								<div className="ratingLabel"> 
+								{/*<div className="ratingLabel"> 
 									<span>What Restaurant ?</span>
 									<button className="">Find my restaurant based on my location</button>
 									<input type="hidden" name="resto" value ={noodleRate} />
 								</div>
-								<p className="ratingComm">{noodleCom}</p>
+								<p className="ratingComm">{noodleCom}</p>*/}
 							</div>
 							<div className="starBack">
 								<div className="ratingLabel"> 
@@ -157,15 +162,15 @@ export default function Report() {
 									<h6 className="ratingComm">What kind of soup? What type of noodles? What were the toppings? </h6>
 									<label>
 										<span>Noodles</span>
-											<input type="text" name="noodleType" value={true}/>
+											<input type="text" name="noodleType" />
 									</label>
 									<label>
 										<span>Soup</span>
-											<input type="text" name="soupType" value={true}/>
+											<input type="text" name="soupType" />
 									</label>
 									<label>
 										<span>Toppings</span>
-											<input type="text" name="toppingType" value={true}/>
+											<input type="text" name="toppingType" />
 									</label>
 								</div>
 							</div>
@@ -187,6 +192,7 @@ export default function Report() {
 						{/*{reportdata && reportdata.error && <p>{reportdata.error}</p>}*/}
 						</Form>
 					</div>
+					
 			</section>
 		</div>
 	)
