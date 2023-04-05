@@ -1,9 +1,10 @@
 import React, { useState,useContext,useEffect } from "react";
-import { Form,useActionData,redirect } from "react-router-dom";
+import { Form,useActionData } from "react-router-dom";
 import ReportHeader from './ReportHeader';
 import StarRating from '../components/StarRating';
 import {DataContext} from '../App';
-import MapContainer from '../components/mapCoding/mapCode-geo';
+// import MapContainer from '../components/mapCoding/mapCode-geo';
+import TheMap from '../components/mapCoding/mapBasic';
 
 import './Report.css';
 // const StarSet = createContext();
@@ -89,7 +90,7 @@ export default function Report() {
 
 	useEffect(()=>{
 		// console.log('Render: report data is at: ',reportdata);
-		if(reportdata != undefined){
+		if(reportdata !== undefined){
 			alert('You made a Ramen Report! You\'ve now done '+reportdata.entries+' Ramen reports.');
 				setUserStat(reportdata);
 		}
@@ -103,10 +104,11 @@ export default function Report() {
 			<ReportHeader />
 			<section className="reportPage">
 				{/*<h2 className="reportHeading">Do a Ramen Report</h2> */}
-				<MapContainer />
+					{/*<TheMap />*/}
 					<div className="reportForm">
 						<Form method="post" action="/report">
 							<div className="starBack">
+								<TheMap />
 								{/*<div className="ratingLabel"> 
 									<span>What Restaurant ?</span>
 									<button className="">Find my restaurant based on my location</button>
