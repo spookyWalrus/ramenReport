@@ -2,7 +2,7 @@ import {useState,useEffect} from "react";
 import {GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import './mapApp.css';
 
-// NOTE:  for 'Marker' component to work in production mode, where 'StrictMode' rendering in index.js is not present,  replace the component 'MarkerF' as 'Marker'. Import 'Marker' instead of 'MarkerF'
+// NOTE:  for 'Marker' component to work in production mode, where 'StrictMode' rendering in index.js is not present,  replace the component 'MarkerF' as 'Marker'. Import 'Marker' instead of 'MarkerF' 
 
 let info = []; 
 
