@@ -14,7 +14,7 @@ export default function Login(){
 
 	// set state to true when login succesful, otherwise show error message
 		useEffect(()=>{
-			if(logdat != undefined){
+			if(logdat !== undefined){
 				// console.log('is logdat? ',logdat);
 				if(logdat.status === true ){
 					setSignedIn(true);
