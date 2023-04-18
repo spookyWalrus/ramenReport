@@ -4,7 +4,9 @@
 }
 
 .map-container {
-  height: 50vh;
-  width: 50vw;
+/*  height: 50vh;*/
+/*  width: 50vw;*/
+height: 30vh;
+width: 60vw;
   position: relative;
 }
