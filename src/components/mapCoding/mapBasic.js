@@ -1,79 +1,98 @@
-import {useMemo,useState} from "react";
-import {GoogleMap, useLoadScript, Marker} from '@react-google-maps/api';
+import {useState,useEffect} from "react";
+import {GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import './mapApp.css';
 
+// NOTE:  for 'Marker' component to work in production mode, where 'StrictMode' rendering in index.js is not present,  replace the component 'MarkerF' as 'Marker'. Import 'Marker' instead of 'MarkerF'
+
+let info = []; 
+
 export default function TheMap(){
+	let pos = [ 
+		{ lat: 45.5591827, lng: -73.7118733}, 
+		'H2W 1V6'
+	]; // default position value on first render
+
+	const [userCoord, setUserCoord] = useState(pos);
 	const {isLoaded} = useLoadScript({
-		googleMapsApiKey: ""
-	});
+		googleMapsApiKey: "AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs",
+	}); // key value should be set as env.value for production
+
+	useEffect(()=>{
+		let infos = [];
+		new Promise(function(resolve,reject){
+				navigator.geolocation.getCurrentPosition(resolve,reject);
+			})
+			.then((response)=>{
+				let user = {
+				         lat: response.coords.latitude,
+				         lng: response.coords.longitude
+			         };
+	         infos[0] = user;
+	         return getPostal(user);
+	      })
+	      .then(postal=>{
+	      	infos[1] = postal;
+	      	setUserCoord(infos);
+	      })
+	      .catch(error =>{
+	      	console.log(error);
+	      })
+	},[]);
 
 	if(!isLoaded){
-		return <div>Loading...</div>;
-	}else{
-		return(
-			<Map />
-		);
+		return <div>Loading...</div>
 	}
+	return (
+			<Mappy coords={userCoord}/> 
+		);
 }
 
-// function setGeo(){
-// 	let pos = {
-// 	   lat: 44,
-// 	   lng: -80
-// 	};
-// 	if (navigator.geolocation) {
-//       navigator.geolocation.getCurrentPosition(position => {
-//          pos = {
-//          lat: position.coords.latitude,
-//          lng: position.coords.longitude
-//          };
-//          console.log('you are here: ',pos);
-// 	      return setGeoPos(pos);
-//       }, function(){
-//       	console.log('you are NOT here: ',pos);
-// 	      return pos;
-//       });
-	 
-//    }
-// }
+function getPostal(xy){
+		let lat = xy.lat;
+		let long = xy.lng;
+       // return fetch('https://geocode.maps.co/reverse?lat='+lat+'&lon='+long,
+		// return fetch('https://www.zipcodeapi.com/rest/v2/CA/js-YzBlb6N1vXDayQwRz8I6g2JpF4WmQ0NINBO6lKN9V1ozoO03tDTVh3ApALCfh9ux/city-postal-codes.json/Rawdon/QC',
+		return fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&key=AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs',
+        {  method: 'post',
+       })
+        .then(res => {
+            if(res.ok){ // check for succesful credentials
+              return res.json()
+            }
+        })
+        .then(data =>{
+        		let postalcode;
+        		let elements = data.results[0].address_components;
+        		for(const key in elements){
+        			if(elements[key].types[0] === 'postal_code'){
+        				postalcode =  elements[key].long_name;
+        			};
+        		}
+        		return postalcode;
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+  }
 
-
-function Map(){
-	const [geoPos, setGeoPos] = useState();
-	function setGeo(){
-		if (navigator.geolocation) {
-	   	navigator.geolocation.getCurrentPosition(position => {
-		         let pos = {
-			         lat: position.coords.latitude,
-			         lng: position.coords.longitude
-		         };
-		         console.log('you are here: ',pos);
-			      // setGeoPos(pos);
-		      }, function(){
-		      	let pos = {
-					   lat: 44,
-					   lng: -80
-					};
-		      	console.log('you are NOT here: ',pos);
-			      // setGeoPos(pos);
-		      }
-	      );
-		}
-	}
-	// const center= useMemo( ()=> ({lat: 44,lng: -80}), []);
-	// console.log('geoset pos: ',geoPos);
-	// const center= useMemo( ()=> (geoPos), []);
-		setGeo();
-		console.log('geoset pos: ',geoPos);
-		const center= useMemo( ()=> (geoPos), []);
-		return( 
+const Mappy = ({coords})=>{
+	let lalo = coords[0];
+	let postal = coords[1];
+	
+	return( 
+		<div>
+			<div>
+				<p>You are somewhere around this postal code:
+					<span><h4>{postal}</h4></span>
+				</p>
+			</div>
 			<GoogleMap
 				zoom={10}
-				center={center}
+				center={lalo}
 				mapContainerClassName="map-container"
 			> 
-				<Marker position={geoPos}/>
+				<MarkerF position={lalo} />
 			</GoogleMap>
-		);
-	
+		</div>
+	);
 }
