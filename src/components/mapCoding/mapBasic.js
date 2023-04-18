@@ -14,7 +14,7 @@ export default function TheMap(){
 
 	const [userCoord, setUserCoord] = useState(pos);
 	const {isLoaded} = useLoadScript({
-		googleMapsApiKey: "AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs",
+		googleMapsApiKey: "process.env.googleKey",
 	}); // key value should be set as env.value for production
 
 	useEffect(()=>{
