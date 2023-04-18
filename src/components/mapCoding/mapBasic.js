@@ -52,7 +52,7 @@ function getPostal(xy){
 		let long = xy.lng;
        // return fetch('https://geocode.maps.co/reverse?lat='+lat+'&lon='+long,
 		// return fetch('https://www.zipcodeapi.com/rest/v2/CA/js-YzBlb6N1vXDayQwRz8I6g2JpF4WmQ0NINBO6lKN9V1ozoO03tDTVh3ApALCfh9ux/city-postal-codes.json/Rawdon/QC',
-		return fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&key=AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs',
+		return fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&key=process.env',
         {  method: 'post',
        })
         .then(res => {
