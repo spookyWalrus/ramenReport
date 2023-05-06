@@ -4,6 +4,7 @@
 	background-size: contain;
 	background-position: 0px 92px;
 	background-attachment: fixed;
+
 /*	background-repeat: no-repeat;*/
 /*	flex-grow: 1;*/
 /*	height: 100vh;*/
@@ -38,9 +39,9 @@
 	position: relative;
 /*	text-align: center;*/
 	justify-content: center;
-	margin: 17%;
+	margin: 5% 17% 10% 17%;
 /*	height: 100%;*/
-	color: green;
+/*	color: green;*/
 }
 
 .reportForm{
@@ -73,7 +74,7 @@
 	margin: 5%;
 }
 .reportSubmitButton {
-	display: inline-block;
+/*	display: inline-block;*/
   background-color: red;
   border: 2px solid red;
   border-radius: 7px;
@@ -129,6 +130,24 @@ h2{
 	color:#00ffdb;
 	margin: 3% 3% 0% 3%;
 /*	padding-left: 30%;*/
+}
+
+.ramenType{
+	display: flex;
+/*	vertical-align: middle;*/
+	flex-flow: column wrap;
+	align-content: center;
+	height: 20%;
+	padding-bottom: 5%;
+}
+
+.ramenType > label {
+	padding: 2%;
+}
+
+input {
+	width:  90%;
+	font-size: 0.7em;
 }
 
 /*.button{

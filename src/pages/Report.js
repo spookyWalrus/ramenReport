@@ -5,6 +5,7 @@ import StarRating from '../components/StarRating';
 import {DataContext} from '../App';
 // import MapContainer from '../components/mapCoding/mapCode-geo';
 import TheMap from '../components/mapCoding/mapBasic';
+import MyMap from '../components/mapCoding/mapPlaces';
 
 import './Report.css';
 // const StarSet = createContext();
@@ -105,17 +106,18 @@ export default function Report() {
 			<section className="reportPage">
 				{/*<h2 className="reportHeading">Do a Ramen Report</h2> */}
 					{/*<TheMap />*/}
+					<div>
+						{/*<TheMap />*/}
+						{/*<MyMap />*/}
+					</div>
 					<div className="reportForm">
 						<Form method="post" action="/report">
-							<div className="starBack">
-								<TheMap />
-								{/*<div className="ratingLabel"> 
-									<span>What Restaurant ?</span>
-									<button className="">Find my restaurant based on my location</button>
-									<input type="hidden" name="resto" value ={noodleRate} />
-								</div>
-								<p className="ratingComm">{noodleCom}</p>*/}
-							</div>
+					{/*			<div className="starBack">
+							<div className="ratingLabel"> 
+									<span>What Restaurant ?</span>*/}
+									<MyMap />
+								{/*	<button className="">Find my restaurant based on my location</button>
+									<input type="hidden" name="resto" value ={noodleRate} />*/}
 							<div className="starBack">
 								<div className="ratingLabel"> 
 									<span>Rate the noodles</span>
@@ -161,26 +163,31 @@ export default function Report() {
 							<div className="starBack">
 								<div className="ratingLabel">
 									<span>What kind of Ramen did you have?</span>
-									<h6 className="ratingComm">What kind of soup? What type of noodles? What were the toppings? </h6>
-									<label>
-										<span>Noodles</span>
-											<input type="text" name="noodleType" />
-									</label>
-									<label>
-										<span>Soup</span>
-											<input type="text" name="soupType" />
-									</label>
-									<label>
-										<span>Toppings</span>
-											<input type="text" name="toppingType" />
-									</label>
+									<h6 className="ratingComm"> What type of noodles? What was the soup? What were the toppings? Oh man, what exactly did I just eat? </h6>
+									<div className="ramenType">
+										<label>
+											<span>Noodles</span>
+										</label>
+										<input type="text" name="noodleType" />
+								
+										<label>
+											<span>Soup</span>
+										</label>
+										<input type="text" name="soupType" />
+									
+										<label>
+											<span>Toppings</span>
+										</label>
+										<input type="text" name="toppingType" />
+
+									</div>
 								</div>
 							</div>
 							<div className="starBack">
 								<div className="ratingLabel">
 									<span>Comments - the specifics of your experience</span>
 									<h6 className="ratingComm">Let us know what you liked or disliked about your meal. Be specific and descriptive. </h6>
-									<textarea name="comments" required></textarea>
+									<textarea name="comments"></textarea>
 								</div>
 							</div>
 							<div>
