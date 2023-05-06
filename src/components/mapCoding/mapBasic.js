@@ -6,6 +6,9 @@ import './mapApp.css';
 
 let info = []; 
 
+let YOUR_API_KEY = 'AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs';
+
+
 export default function TheMap(){
 	let pos = [ 
 		{ lat: 45.5591827, lng: -73.7118733}, 
@@ -14,7 +17,7 @@ export default function TheMap(){
 
 	const [userCoord, setUserCoord] = useState(pos);
 	const {isLoaded} = useLoadScript({
-		googleMapsApiKey: "process.env.googleKey",
+		googleMapsApiKey: YOUR_API_KEY,
 	}); // key value should be set as env.value for production
 
 	useEffect(()=>{
