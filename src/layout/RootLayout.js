@@ -6,7 +6,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 
 
 //components
-import { ScrollWithOffset} from '../components/CheckNav';
+import {ScrollWithOffset,ScrollNoOffset} from '../components/CheckNav';
 import UserInOut from '../components/UserInOut';
 import Footer from '../components/Footer';
 
@@ -76,12 +76,16 @@ export default function RootLayout(){
 							<Navbar.Toggle aria-controls="basic-navbar-nav"  id="my-navbar-icon" />
 								<Navbar.Collapse id="basic-navbar-nav" className="myMenu" >
 									<Nav className="ms-auto myLinks " >
-										<LinkContainer to="report" onClick={()=>setActive(3)}>
-											<Nav.Link  active={false} eventKey="1" >Do a Report
-										</Nav.Link>
+										<LinkContainer to="report" onClick={()=>setActive(3)}
+										>
+											<Nav.Link  active={false} eventKey="1" onClick={()=>ScrollNoOffset()}
+											 >Do a Report
+											</Nav.Link>
 										</LinkContainer>
-										<LinkContainer to="ratings" onClick={()=>setActive(2)} >
-											<Nav.Link  active={false} eventKey="2" isactive="null">View Ratings 
+										<LinkContainer to="ratings" onClick={()=>setActive(2) }>
+											<Nav.Link  active={false} eventKey="2" isactive="null" 
+											onClick={()=>ScrollNoOffset()}
+												>View Ratings 
 											</Nav.Link>
 										</LinkContainer>
 										<Nav.Link eventKey="3" 

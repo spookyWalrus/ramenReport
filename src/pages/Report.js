@@ -101,108 +101,108 @@ export default function Report() {
 
 
 	return(
-		<div className="reportBack">
-			<ReportHeader />
-			<section className="reportPage">
-				{/*<h2 className="reportHeading">Do a Ramen Report</h2> */}
-					{/*<TheMap />*/}
-					<div>
+			<div className="reportBack">
+				<ReportHeader />
+				<section className="reportPage">
+					{/*<h2 className="reportHeading">Do a Ramen Report</h2> */}
 						{/*<TheMap />*/}
-						{/*<MyMap />*/}
-					</div>
-					<div className="reportForm">
-						<Form method="post" action="/report">
-					{/*			<div className="starBack">
-							<div className="ratingLabel"> 
-									<span>What Restaurant ?</span>*/}
-									<MyMap />
-								{/*	<button className="">Find my restaurant based on my location</button>
-									<input type="hidden" name="resto" value ={noodleRate} />*/}
-							<div className="starBack">
+						<div>
+							{/*<TheMap />*/}
+							{/*<MyMap />*/}
+						</div>
+						<div className="reportForm">
+							<Form method="post" action="/report">
+						{/*			<div className="starBack">
 								<div className="ratingLabel"> 
-									<span>Rate the noodles</span>
-									<StarRating rate={rateNoodle} num={1}>
-									</StarRating>
-									<input type="hidden" name="noodles" value ={noodleRate} />
-								</div>
-								<p className="ratingComm">{noodleCom}</p>
-							</div>
-							<div className="starBack">
-								<div className="ratingLabel">
-									<span>Rate the Soup</span>
-								<StarRating rate={rateSoup} num={2} >
-									</StarRating>
-									<input type="hidden" name="soup" value ={soupRate} />
-								</div>
-								<p className="ratingComm">{soupCom}</p>
-							</div>
-							<div className="starBack">
-								<div className="ratingLabel">
-									<span>Rate the Toppings</span>
-								<StarRating rate={rateTopp} num={3} >
-									</StarRating>
-									<input type="hidden" name="toppings" value ={soupRate} />
-								</div>
-								<p className="ratingComm">{toppCom}</p>
-							</div>
-							<div className="starBack">
-								<div className="ratingLabel">
-									<span>Rate over all experience</span>
-								<StarRating rate={rateExp} num={4} >
-									</StarRating>
-									<input type="hidden" name="experience" value ={expRate} />
-								</div>
-								<p className="ratingComm">{expCom}</p>
-							</div>
-							<div className="starBack">
-								<div className="ratingLabel">
-										<h3>Total Score</h3>
-									<h2>{total}</h2>
+										<span>What Restaurant ?</span>*/}
+										<MyMap />
+									{/*	<button className="">Find my restaurant based on my location</button>
+										<input type="hidden" name="resto" value ={noodleRate} />*/}
+								<div className="starBack">
+									<div className="ratingLabel"> 
+										<span>Rate the noodles</span>
+										<StarRating rate={rateNoodle} num={1}>
+										</StarRating>
+										<input type="hidden" name="noodles" value ={noodleRate} />
 									</div>
-							</div>
-							<div className="starBack">
-								<div className="ratingLabel">
-									<span>What kind of Ramen did you have?</span>
-									<h6 className="ratingComm"> What type of noodles? What was the soup? What were the toppings? Oh man, what exactly did I just eat? </h6>
-									<div className="ramenType">
-										<label>
-											<span>Noodles</span>
-										</label>
-										<input type="text" name="noodleType" />
-								
-										<label>
-											<span>Soup</span>
-										</label>
-										<input type="text" name="soupType" />
+									<p className="ratingComm">{noodleCom}</p>
+								</div>
+								<div className="starBack">
+									<div className="ratingLabel">
+										<span>Rate the Soup</span>
+									<StarRating rate={rateSoup} num={2} >
+										</StarRating>
+										<input type="hidden" name="soup" value ={soupRate} />
+									</div>
+									<p className="ratingComm">{soupCom}</p>
+								</div>
+								<div className="starBack">
+									<div className="ratingLabel">
+										<span>Rate the Toppings</span>
+									<StarRating rate={rateTopp} num={3} >
+										</StarRating>
+										<input type="hidden" name="toppings" value ={soupRate} />
+									</div>
+									<p className="ratingComm">{toppCom}</p>
+								</div>
+								<div className="starBack">
+									<div className="ratingLabel">
+										<span>Rate over all experience</span>
+									<StarRating rate={rateExp} num={4} >
+										</StarRating>
+										<input type="hidden" name="experience" value ={expRate} />
+									</div>
+									<p className="ratingComm">{expCom}</p>
+								</div>
+								<div className="starBack">
+									<div className="ratingLabel">
+											<h3>Total Score</h3>
+										<h2>{total}</h2>
+										</div>
+								</div>
+								<div className="starBack">
+									<div className="ratingLabel">
+										<span>What kind of Ramen did you have?</span>
+										<h6 className="ratingComm"> What type of noodles? What was the soup?  What were the toppings? Oh man, what exactly did I just eat? </h6>
+										<div className="ramenType">
+											<label>
+												<span>Noodles</span>
+											</label>
+											<input type="text" name="noodleType" />
 									
-										<label>
-											<span>Toppings</span>
-										</label>
-										<input type="text" name="toppingType" />
+											<label>
+												<span>Soup</span>
+											</label>
+											<input type="text" name="soupType" />
+										
+											<label>
+												<span>Toppings</span>
+											</label>
+											<input type="text" name="toppingType" />
 
+										</div>
 									</div>
 								</div>
-							</div>
-							<div className="starBack">
-								<div className="ratingLabel">
-									<span>Comments - the specifics of your experience</span>
-									<h6 className="ratingComm">Let us know what you liked or disliked about your meal. Be specific and descriptive. </h6>
-									<textarea name="comments"></textarea>
+								<div className="starBack">
+									<div className="ratingLabel">
+										<span>Comments - the specifics of your experience</span>
+										<h6 className="ratingComm">Let us know what you liked or disliked about your meal. Be specific and descriptive. </h6>
+										<textarea name="comments"></textarea>
+									</div>
 								</div>
-							</div>
-							<div>
-								<input type="hidden" name="logstat" value={signedIn} />
-								<input type="hidden" name="email" value={email} />
+								<div>
+									<input type="hidden" name="logstat" value={signedIn} />
+									<input type="hidden" name="email" value={email} />
+									</div>
+								<div className="buttonBack">
+									<button className="reportSubmitButton">Submit</button>
 								</div>
-							<div className="buttonBack">
-								<button className="reportSubmitButton">Submit</button>
-							</div>
 
-						{/*{reportdata && reportdata.error && <p>{reportdata.error}</p>}*/}
-						</Form>
-					</div>
-					
-			</section>
-		</div>
+							{/*{reportdata && reportdata.error && <p>{reportdata.error}</p>}*/}
+							</Form>
+						</div>
+						
+				</section>
+			</div>
 	)
 }

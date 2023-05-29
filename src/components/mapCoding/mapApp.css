@@ -3,6 +3,13 @@
   width: 100vw;
 }
 
+#map  { 
+  display: none;
+  width: 50%;
+  height: 100px; 
+}
+
+
 .map-container {
 /*  height: 50vh;*/
 /*  width: 50vw;*/
@@ -14,6 +21,7 @@ width: 60vw;
 select {
   width: 90%;
   font-size: 0.8em;
+  text-align: center;
 }
 
 button{
@@ -21,11 +29,44 @@ button{
   font-size: 0.8em;
 }
 
-#restoSelect{
-  display: inline;
+#restoSelectBlock{
+/*  display: inline;*/
+  margin-top: 5%;
 }
+.select-color{
+  background-color: #fff;
+  color: #5720a8;
+  border: #fff;
+}
+.select-color:focus{
+  box-shadow: 0 0 0 .1rem rgb(240, 191, 14)
+}
+/*.selectResto select {
+  appearance: none;
+  width: 100%; padding: 10px;
+  color: #333;
+  border: 1px solid rgb(240, 191, 14);
+}
+.selectResto{
+  position: relative;
+}
+.selectResto::after { 
+  content: "\279C";
+   position: absolute;
+  top: 23%; 
+  right: 24px;
+  rotate: 90deg;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: rgb(240, 191, 14);
+}*/
 
 .restoBlock{
   margin: 0;
   padding: 10px;
+}
+
+.restoLocate{
+  margin-top: 5%;
+  display: inline-flex;
 }
