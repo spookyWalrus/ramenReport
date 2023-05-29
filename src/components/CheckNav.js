@@ -2,14 +2,22 @@ import {createContext} from 'react';
 // set Datacontext for log in status
 // const DataContext = createContext({});
 
-// scroll behaviour
+// -----  scroll behaviour -------
 const ScrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -40; 
     window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
+    console.log('ScrollOffset clicked');
 }
-// export {ScrollWithOffset,DataContext};
-export {ScrollWithOffset};
+
+const ScrollNoOffset = (el) => {
+    // const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+    // const yOffset = -10; 
+    window.scrollTo({top:0, behaviour: 'smooth'}); 
+    console.log('noOffset clicked');
+}
+export {ScrollWithOffset,ScrollNoOffset};
+
 
 
 // ===============  login user / fetch request ============
