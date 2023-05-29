@@ -113,12 +113,18 @@ header{
       text-align: right;
     }
 }
+
 /*----------- main content*/
 main{
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  flex: auto;
-  height:100%;
+/*  flex: auto;*/
+  height: 100%;
+  display: flex;
+}
+
+#home{
+  height: auto;
 }
 
 /*----------- buttons to go to Know or to Report ---------*/
@@ -133,18 +139,24 @@ main{
 .toKnow{
   background-color: #FF9908;
   border: #000;
+  margin: 1% 5% 1% 3%;
 }
 .toKnow:hover{
   background-color: rgba(255,214,155,1);
-  border: #000;
+  color: #000 !important;
+/*  border: #000;*/
 }
 
-.toReport{
-  background-color:  #dd1616 !important;
+#toReport{
+  background-color: #dd1616;
   border: #000;
+  margin: 1% 5% 1% 3%;
+
 }
-.toReport:hover{
-  background-color: rgba(234,98,98,1);
+#toReport:hover{
+  background-color: rgba(255,211,212,1);
+/*  background-color: rgba(234,98,98,1);*/
+  color: #000 !important;
   border: #000;
 }
 

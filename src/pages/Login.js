@@ -3,6 +3,8 @@ import {useContext,useEffect} from 'react';
 // import {DataContext} from '../components/CheckNav';
 import {DataContext} from '../App';
 
+import './loginReg.css';
+
 export default function Login(){
 	const location = useLocation();
 	const logdat = useActionData();
@@ -32,58 +34,78 @@ export default function Login(){
 
 	if(location.pathname === '/register'){
 		return(
-			<div className="ratingBack">
-		      <div className="reportIntro">
-					<h2>This is the Register</h2>
-				</div>
-				<div className="reportPage">
-					<Form method="post" action="/register">
-						<label>
-							<span>User name</span>
+			<div className="loginBackDrop">
+				<div className="loginBlock">
+						<Form method="post" action="/register">
+						<h2>This is the Register</h2>
+							<label for="userName">
+								<span>User name</span>
+							</label>
 							<input type="text" name="userName" required />
-						</label>
-						<label>
-							<span>Email</span>
+							<label for="email">
+								<span>Email</span>
+							</label>
 							<input type="email" name="email" required />
-						</label>
-						<label>
-							<span>Password</span>
+
+							<label for="passsword">
+								<span>Password</span>
+							</label>
 							<input type="password" name="password" required />
-						</label>
-					
-						<div>
+
 							<input type="hidden" name="logreg" value="register" />
-							<button type="submit" className="reportSubmitButton">Sign me up!</button>
-						</div>
-					</Form>
+							<button type="submit" className="signUpButton">Sign me up!</button>
+						</Form>
+					{/*</div>*/}
                 {logdat && logdat.regerror && <p>{logdat.regerror}</p>}
 				</div>
 			</div>
 		)
 	}else if(location.pathname === '/login'){
 		return(
-			<div className="ratingBack">
-		      <div className="reportIntro">
-					<h2>This is the login</h2>
-				</div>
-				<div className="reportPage">
-					<Form method="post" action="/login">
-						<label>
-							<span>Email</span>
-							<input type="text" name="email" required />
-						</label>
-						<label>
-							<span>Password</span>
+			<div className="loginBackDrop">
+				<div className="loginBlock">
+						<Form method="post" action="/login">
+						<h2>This is the Log in</h2>
+							<label for="email">
+								<span>Email</span>
+							</label>
+							<input type="email" name="email" required />
+							<label for="passsword">
+								<span>Password</span>
+							</label>
 							<input type="password" name="password" required />
-						</label>
-						<div>
+							
 							<input type="hidden" name="logreg" value="login" />
-							<button type="submit" className="reportSubmitButton">Submit</button>
-						</div>
-					</Form>
-				 {logdat && logdat.error && <p>{logdat.error}</p>}
+							<button type="submit" className="signUpButton">Log in</button>
+						</Form>
+					{/*</div>*/}
+                {logdat && logdat.regerror && <p>{logdat.regerror}</p>}
 				</div>
 			</div>
+
+
+			// <div className="ratingBack">
+		   //    <div className="reportIntro">
+			// 		<h2>This is the login</h2>
+			// 	</div>
+			// 	<div className="reportPage">
+			// 		<Form method="post" action="/login">
+			// 			<label>
+			// 				<span>Email</span>
+			// 				<input type="text" name="email" required />
+			// 			</label>
+			// 			<label>
+			// 				<span>Password</span>
+			// 				<input type="password" name="password" required />
+			// 			</label>
+			// 			<div>
+			// 				<input type="hidden" name="logreg" value="login" />
+			// 				<button type="submit" className="reportSubmitButton">Submit</button>
+			// 			</div>
+			// 		</Form>
+			// 	 {logdat && logdat.error && <p>{logdat.error}</p>}
+			// 	</div>
+			// </div>
 		)
 	}
 }

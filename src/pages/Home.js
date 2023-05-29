@@ -13,18 +13,24 @@ const Home = () =>{
 					<p className="bannerHeading">The Ramen Report</p>
 					<h3>Where you can rate and review the amazing bowl of ramen you've eaten.
 					</h3>
+					<LinkContainer to="/report">
+						<Button variant="info" className="button" id="toReport">Make a Report now</Button>
+					</LinkContainer>
 					<p className="lineBreak"></p>
-					<h4>You can also see which bowl ranks highest in your area and where you can find this tasty meal.
-					</h4>
+					<h3>Find which bowl of Ramen ranks highest in your area and where you can find this tasty meal.
+					</h3>
 					<p className="lineBreak"></p>
-					<div className="reportButtBlock">
+					<LinkContainer to="/ratings">
+						<Button variant="info" className="button toKnow">Find me the tastiest bowl</Button>
+					</LinkContainer>
+					{/*<div className="reportButtBlock">
 						<LinkContainer to="/ratings">
-							<Button variant="info" className="toKnow button">Find me the tastiest bowl</Button>
+							<Button variant="info" className="button toKnow">Find me the tastiest bowl</Button>
 						</LinkContainer>
 						<LinkContainer to="/report">
-							<Button variant="info" className="toReport button">Make a Report now</Button>
+							<Button variant="info" className="button" id="toReport">Make a Report now</Button>
 						</LinkContainer>
-					</div>
+					</div>*/}
 				</div>
 			</div>
 

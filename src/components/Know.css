@@ -1,5 +1,6 @@
 #know{
-	display: flex;
+/*	display: flex;*/
+/* height: 100%;*/
 }
 
 .KnowBack {
@@ -7,7 +8,6 @@
 	position: relative;
 	display: block;
 	padding: 10%;
-	height:100vh;
 /*		top: 98px;*/
 }
 
