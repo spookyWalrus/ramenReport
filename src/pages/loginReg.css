@@ -1,0 +1,81 @@
+
+.loginBackDrop{
+	background-color: #000;
+	background-size: contain;
+	background-position: 0px 92px;
+	background-attachment: fixed;
+/*	flex: auto;*/
+	height: 100vh;
+	width: 100%;
+}
+
+.loginBlock{
+		position: relative;
+	/*	text-align: center;*/
+		justify-content: center;
+		margin: 14% 8% 10% 8%;
+		color: #fff;
+		font-size: 1.2em;
+		text-align: left;
+	}
+
+.loginBlock > Form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+h2{
+}
+
+.loginBlock > Form > label{
+	padding: 3% 4% 1% 4%;
+}
+
+.loginBlock > Form > input{
+	width: 50%;
+}
+
+
+.signUpButton{
+	background-color: red;
+	border: 2px solid red;
+	border-radius: 7px;
+	outline: none;
+	cursor: pointer;
+	color: #000;
+	padding: 1% 8% 1% 8%;
+	margin-top: 4%;
+	font-size: 1.2em;
+	width: 50%;
+}
+
+@media only screen and (max-width: 600px){
+	.loginBlock{
+		position: relative;
+	/*	text-align: center;*/
+		justify-content: center;
+		margin: 17% 8% 10% 8%;
+		color: #fff;
+		font-size: 1.2em;
+		text-align: left;
+	}
+
+	.loginBlock > Form > input{
+		width: 60%;
+	}
+	.signUpButton{
+		background-color: red;
+		border: 2px solid red;
+		border-radius: 7px;
+		outline: none;
+		cursor: pointer;
+		color: #000;
+		padding: 2% 8% 2% 8%;
+		margin-top: 8%;
+		font-size: 1em;
+		width: 60%;
+	}
+}

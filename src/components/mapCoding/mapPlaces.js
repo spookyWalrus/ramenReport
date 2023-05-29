@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 // import ramenIcon from './ramen.png';
 
+
 let YOUR_API_KEY = 'AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs';
 
 // const ramenIcon = {url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
@@ -16,18 +17,17 @@ const MyMap = () => {
   useEffect(() => {
     const defPos = {lat: 45.5591827, lng: -73.7118733};
     // get position of user
-
     const loader = new Loader({
       apiKey: YOUR_API_KEY,
       libraries: ['places','marker'],
     })
     loader.load()
     .then(() => {
-    //   const map = new window.google.maps.Map(document.getElementById('map'), {
-    //     // center: {lat: 45.5591827, lng: -73.7118733},
-    //     center: defPos,
-    //     zoom: 12
-    //   })
+      // const map = new window.google.maps.Map(document.getElementById('map'), {
+        // center: {lat: 45.5591827, lng: -73.7118733},
+        // center: defPos,
+        // zoom: 12
+      // })
       
     //   const marker1 = new window.google.maps.Marker({
     //     position: defPos,
@@ -43,7 +43,8 @@ const MyMap = () => {
       // console.log('setPlacesService: ',placesService);
     })
     .then(()=>{
-        // handleSearch();
+    //     handleSearch();
+      // setRestolist([]);
     })
     // handleSearch();
   }, []);
@@ -53,92 +54,60 @@ const MyMap = () => {
   let mtlPos = {lat: 45.5591827, lng: -73.7118733};
 // let circlePos = {radius: 100,lat: 45.5591827, lng: -73.7118733,};// this should be same as user coordinates
 
-  function handleSearch(circlePos,yn) {
-    console.log(circlePos,yn);
-    if(!yn){
-      let circlePos = {radius: 100,lat: 45.5591827, lng: -73.7118733,};
-    }
+  function handleSearch(userCity) {
+    console.log('city is at: ',userCity);
+    restoPlaces=['eating'];
+
+    // let circlePos;
+    // if(arg === 'default'){//check if user allows location data
+      // circlePos = {radius: 100,lat: 45.5591827, lng: -73.7118733,}; // default value if user doesn't want to be located. Lat/lng to be changed by user choice of city
+    // }else{
+    //   circlePos = arg;
+    // }
+
     let request = {
-      location: new window.google.maps.Circle(circlePos),
-      // location: new window.google.maps.LatLng(mtlPos),
-      // location: new window.google.maps.LatLng(rawPos.lat,rawPos.lng),
-      // location: mtlPos,
-      // radius: 1000,
+      location: new window.google.maps.Circle(userCity),
       query: 'ramen'
-      // keyword: 'Ramen',
-      // type: 'restaurant'
     }
     placesService.textSearch(request,callback);
     // placesService.nearbySearch(request,callback);
     // placesService.findPlaceFromQuery(request,callback);
-
-    // function doSearch(request,callback){
-    //   placesService.textSearch(request,callback);
-    // }
-    // placesService.textSearch({ query: 'ramen' }, (results, status) 
-
     function callback(results,status,pagination){
-      const ramenIcon = {
-        url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
-        scaledSize: new window.google.maps.Size(25,25)
-      }
+      // const ramenIcon = {
+      //   url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
+      //   scaledSize: new window.google.maps.Size(25,25)
+      // }
+      // use above to for ramen icons as marker
       
       if (status === 'OK') {
-        // token = next_page_token.o;
-        // console.log(results);
-        // console.log(PlaceSearchPagination);
         for (let x of results){
-          // console.log(x.name);
-          // console.log(x.formatted_address);
-
-          // put marker on map
-          // let lati = x.geometry.location.lat();
-          // let longi = x.geometry.location.lng();
-          // let resto = new window.google.maps.Marker({
-          //   position: {lat: lati, lng: longi},
-          //   map: map,
-          //   title: x.name,
-          //   icon: ramenIcon
-          // }) 
-
           // populate list of restos
           if(x.name === 'KINTON RAMEN'){ // check for doubles
-            // console.log(x.formatted_address);
             let addr = 'KINTON RAMEN - '+ ramenAddy(x.formatted_address);
-            // console.log(addr);
-            checkDoubles(addr);
-          }else if(x.name === 'Kumamoto Ramen'){
+            // checkDoubles(addr);
+            if(!restoPlaces.includes(addr)){
+                restoPlaces.push(addr);
+              }
+          }else if(x.name === 'Kumamoto Ramen'){// check for doubles
             let addr = 'Kumamoto Ramen - '+ ramenAddy(x.formatted_address);
-            // console.log(addr);
-            checkDoubles(addr);
+             if(!restoPlaces.includes(addr)){
+                restoPlaces.push(addr);
+              }
           }else{
-            // console.log(x.name);
-            checkDoubles(x.name);
+            if(!restoPlaces.includes(x.name)){
+                restoPlaces.push(x.name);
+            }
           }
-          // console.log(getPostal(x.formatted_address));
         }
         let first = restoPlaces.shift();
+        console.log(restoPlaces);
         setRestolist(restoPlaces);
-
-        // console.log(results[0].geometry.location.lat());
-        // console.log(results[0].geometry.location.lng());
         if (pagination.hasNextPage) {// get next page of results
-            // PlaceSearchPagination.nextPage();
             // pagination.nextPage();
         }
       }
     }; //end of callback();
-
-    function checkDoubles(resto){
-      // console.log('checkDouble ',resto);
-      if(!restoPlaces.includes(resto)){
-        // console.log('exists: ',resto)
-        // console.log('adding: ',resto);
-        restoPlaces.push(resto);
-      }else{
-        // restoPlaces.push(resto);
-      }
-    }
+  }; //end of handleSearch()
 
     function getPostal(address){
       let provpost = address.split(',');
@@ -153,15 +122,8 @@ const MyMap = () => {
       let road = street.replace(/[0-9]/g,'').trim();
       return road;
     }
-    // let first = restoPlaces.shift();
-    // console.log('restoPlaces: ',restoPlaces);
-    // console.log('restoList: ',restoList);
-  };
-  //end of handleSearch()
 
-  function report(state){
-    console.log(`Permission ${state}`)
-  }
+ 
 
   let access;
   function checkAccess(){
@@ -187,8 +149,7 @@ const MyMap = () => {
           })
           .then((geoloc)=>{
             let circlePos = {radius: 100, lat: geoloc.lat, lng: geoloc.lng};
-            let yn = true;
-            handleSearch(circlePos,yn)
+            handleSearch(circlePos)
           })
           .catch((error) =>{
             access = 'denied';
@@ -196,30 +157,63 @@ const MyMap = () => {
           });
   }
 
-      
-    
+  let userCity;
+  const getCity = ((selection)=>{
+    let city = selection.target.value;
+    console.log('city is: ',city);
+    switch(city){
+      case 'Montreal':
+        userCity = {radius: 100,lat: 45.5041905839693, lng:-73.57431928743786};
+        break;
+      case 'Toronto': 
+        userCity = {radius: 100,lat: 43.655739842049236, lng: -79.38374061036242};
+        break;
+      case 'Vancouver':
+        userCity = {radius: 100,lat: 49.280956827935505, lng:-123.12243738369997};
+        break;
+      case 'Ottawa':
+        userCity = {radius: 100,lat: 45.41982910818854, lng: -75.70019586916331};
+        break;
+      default:
+        userCity = {radius: 100,lat: 45.5041905839693, lng:-73.57431928743786};//default is Montreal
+    }
+  })
 
   return (
     <>
-      {/*<div id="map" style={{ width: '0%', height: '0px' }}></div>*/}
+      <div id="map">
+        <span>geomap</span>
+      </div>
       {/*{console.log('re-render')}*/}
       {/*{console.log(restoList)}*/}
-
+     
 
       <div className="starBack">
           {/*<TheMap />*/}
         <div className="ratingLabel"> 
             <span>Select your restaurant</span>
-            <h6 className="ratingComm">By clicking below, the app will access your location data to give you a list of restaurants for you to choose from</h6>
-            <div class="restoBlock">
-               <button onClick={checkAccess} type="button">Give me a list of ramen joints near me
+            <div className="restoLocate">
+              <div className="restoBlock">
+                <h6 className="ratingComm">By clicking below, the app will access your location data to give you a list of restaurants nearest to you</h6>
+                   <button onClick={checkAccess} type="button">Ramen joints near me
+                   </button>
+              </div>
+              <div className="restoBlock">
+                <h6 className="ratingComm">If you would rather not give your location data, choose your city and find your restaurant in the list</h6>
+                <select onChange={getCity}>
+                  <option></option>
+                  <option value='Montreal' name='city'>Montreal</option>
+                  <option value='Toronto' name='city'>Toronto</option>
+                  <option value='Vancouver' name='city'>Vancouver</option>
+                  <option value='Ottawa' name='city'>Ottawa</option>
+                </select>
+               <button onClick={()=>handleSearch(userCity)} type="button">GO
                </button>
-               <button onClick={handleSearch} type="button">No thanks. Just give me a list based on the city I'm in and I'll figure it out.
-               </button>
+              </div>
             </div>
-          <div id="restoSelect">
-            <div class="ramenType">
-              <select>
+          <div id="restoSelectBlock">
+            <div className="selectResto">
+              <select className="select-color form-select form-select-lg mb-3 " aria-label="Default select example">
                 {/*<option value="" />*/}
                   {restoList.map((restoNames,i) =>{
                     return <option key={i} value={restoNames} name="resto">{restoNames}
