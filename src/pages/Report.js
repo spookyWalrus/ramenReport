@@ -5,7 +5,7 @@ import StarRating from '../components/StarRating';
 import {DataContext} from '../App';
 // import MapContainer from '../components/mapCoding/mapCode-geo';
 import TheMap from '../components/mapCoding/mapBasic';
-import MyMap from '../components/mapCoding/mapPlaces';
+import MyMap from '../components/mapCoding/mapPlaces-orig';
 
 import './Report.css';
 // const StarSet = createContext();
@@ -98,7 +98,7 @@ export default function Report() {
 	},[reportdata])
 
 	// let map = TheMap();
-
+	let title = 'Select your restaurant';
 
 	return(
 			<div className="reportBack">
@@ -115,7 +115,7 @@ export default function Report() {
 						{/*			<div className="starBack">
 								<div className="ratingLabel"> 
 										<span>What Restaurant ?</span>*/}
-										<MyMap />
+										<MyMap mapTitle={title}/>
 									{/*	<button className="">Find my restaurant based on my location</button>
 										<input type="hidden" name="resto" value ={noodleRate} />*/}
 								<div className="starBack">

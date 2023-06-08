@@ -54,9 +54,11 @@ export default function Login(){
 
 							<input type="hidden" name="logreg" value="register" />
 							<button type="submit" className="signUpButton">Sign me up!</button>
+							 <div className="logregError">
+			                {logdat && logdat.regerror && <p>{logdat.regerror}</p> }
+		                </div>
 						</Form>
-					{/*</div>*/}
-                {logdat && logdat.regerror && <p>{logdat.regerror}</p>}
+
 				</div>
 			</div>
 		)
@@ -77,9 +79,10 @@ export default function Login(){
 							
 							<input type="hidden" name="logreg" value="login" />
 							<button type="submit" className="signUpButton">Log in</button>
+		               <div className="logregError">
+			                {logdat && logdat.error && <p>{logdat.error} Check credentials</p>}
+	   	            </div>
 						</Form>
-					{/*</div>*/}
-                {logdat && logdat.regerror && <p>{logdat.regerror}</p>}
 				</div>
 			</div>
 

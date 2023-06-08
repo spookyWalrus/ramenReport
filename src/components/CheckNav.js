@@ -90,7 +90,7 @@ export const sendLoginAction = async({ request })=> {
         })
         .catch((error) => {
             console.log(error);
-            return response = {error: 'Logging error'};
+            return response = {error: 'Log-in error.'};
         })
 
     }else if(login.logReg === "register"){
@@ -113,12 +113,12 @@ export const sendLoginAction = async({ request })=> {
             return response = { 
                 status: true,
                 userstat: data,
-                alert: alert(" Registeration successful")
+                alert: alert(" Registration successful")
             }
         })
         .catch((error) => {
             console.log(error);
-            return response = {regerror: 'Registration error'};
+            return response = {regerror: 'Registration error.'};
         })
     }
 
