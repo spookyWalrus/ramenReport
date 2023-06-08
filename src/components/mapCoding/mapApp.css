@@ -4,9 +4,10 @@
 }
 
 #map  { 
-  display: none;
-  width: 50%;
-  height: 100px; 
+  position: relative;
+  display: block;
+  width: auto;
+  height: 300px; 
 }
 
 

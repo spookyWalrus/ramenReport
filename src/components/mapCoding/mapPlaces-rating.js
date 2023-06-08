@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
-// import ramenIcon from './ramen.png';
+import ramenIcon from './ramen.png';
 import {useLocation} from 'react-router-dom';
 
 
@@ -16,6 +16,7 @@ const MyMap = (mapTitle) => {
   const [restoList,setRestolist] = useState([]);
   const [restoMarker, setRestoMarker] = useState([]);
   const location = useLocation();
+  const markerArr = ['go'];
 
 // ==== update page to see map and markers of restos =====
   // useEffect(() => {
@@ -60,7 +61,7 @@ const MyMap = (mapTitle) => {
         libraries: ['places','marker'],
     })
     loader.load()
-     .then(() => {
+    .then(() => {
       const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
 
       setPlacesService(placesService);
@@ -68,16 +69,58 @@ const MyMap = (mapTitle) => {
     })
     .then(()=>{
         const defPos = {lat: 45.5591827, lng: -73.7118733};
-       const map = new window.google.maps.Map(document.getElementById('map'), {
+       
+        let mappy = new window.google.maps.Map(document.getElementById('map'), {
           center: defPos,
           zoom: 12
         })
+        setTheMap(mappy);
+
+   //  .then(()=>{
+        // const defPos = {lat: 45.5591827, lng: -73.7118733};
+        let marker = new window.google.maps.Marker({
+            position: defPos,
+            map: map,
+            title: 'you are here',
+            // icon: 'pin.png'
+        });
+        marker.setMap(mappy);
+    })
+   
       
     //     handleSearch();
       // setRestolist([]);
-    })
     // handleSearch();
   }, []);
+
+  // ========= load markers on to map =======
+  useEffect(()=>{
+     
+        // let markermap = new window.google.maps.Map(document.getElementById('map'), {
+        //     center: userCity, // or center of selected city
+        //     zoom: 12
+        //   })
+
+        for(let x = 0;x<restoMarker.length;x++){
+            let lat = restoMarker[x].lat;
+            let lng = restoMarker[x].lng;
+            let resto = restoMarker[x].resto;
+         
+            console.log(lat,lng,resto);
+            const markerIcon = {
+              url: ramenIcon,
+              scaledSize: new window.google.maps.Size(35,35),
+            };
+
+            let marker =  new window.google.maps.Marker(
+            {  position: {lat:lat,lng:lng},
+              map: map,
+              title: resto,
+              icon: markerIcon,
+            });
+          marker.setMap(map);
+        }
+  },[restoMarker])
 
 // ========== default coordinates ======================
 
@@ -108,7 +151,6 @@ const MyMap = (mapTitle) => {
      
 
     if (status === 'OK') {
-
       for (let x of results){
         // populate list of restos
         
@@ -126,12 +168,18 @@ const MyMap = (mapTitle) => {
         }else{
           if(!restoPlaces.includes(x.name)){
               restoPlaces.push(x.name);
-              // makeMarker(x);
           }
         }
+        makeMarker(x);        
       }
       let first = restoPlaces.shift();
-      // console.log(restoPlaces);
+      console.log(restoPlaces);
+      // console.log(markerArr);
+      let second  = markerArr.shift();
+      console.log(markerArr);
+        setRestolist(restoPlaces);
+        setRestoMarker(markerArr);
+
       if (pagination.hasNextPage) {// get next page of results
           // pagination.nextPage();
       }
@@ -153,20 +201,45 @@ const MyMap = (mapTitle) => {
     };
 
     function makeMarker(restoDetails){
-      let lat = restoDetails.geometry.location.lat();
-      let lng = restoDetails.geometry.location.lng();
-          const marker = new window.google.maps.Marker({
-            position: {lat,lng},
-            // map: map,
-            title: restoDetails.name,
-            // icon: 'pin.png'
-            label: 'restoDetais'
-          })
-          let markerLL = [{lat,lng},restoDetails.name];
-          console.log(markerLL);
-          setRestoMarker(markerLL);
+      
+       // const map = new window.google.maps.Map(document.getElementById('map'), {
+       //    center:{lat,lng}, // or center of selected city
+       //    zoom: 12
+       //  })
+       //    let marker = new window.google.maps.Marker({
+       //      position: {lat,lng},
+       //      map: map,
+       //      title: restoDetails.name,
+       //      // icon: 'pin.png'
+       //      // label: 'restos'
+       //    })
+          let restObj = {};
+          restObj.lat = restoDetails.geometry.location.lat();
+          restObj.lng = restoDetails.geometry.location.lng();
+          restObj.resto = restoDetails.name;
+        
+          markerArr.push(restObj);
+
+          // setRestoMarker(markerLL);
+          // setRestoMarker(markerLL);
       // })
       // setRestoMarker(markerLL);
+    }
+
+    function placeMarker(){
+      let lat = 9;
+      let lng = 0;
+      const map = new window.google.maps.Map(document.getElementById('map'), {
+          center:{lat,lng}, // or center of selected city
+          zoom: 12
+        })
+          let marker = new window.google.maps.Marker({
+            position: {lat,lng},
+            map: map,
+            // title: restoDetails.name,
+            // icon: 'pin.png'
+            // label: 'restos'
+          })
     }
  
 
