@@ -227,6 +227,9 @@ const MyMap = (mapTitle) => {
                </button>
             </div>*/}
           </div>
+          <div >
+            <h6 className="ratingComm">Is your restaurant not on the list? Click below and make an entry for the restaurant you're at</h6>
+          </div>
         </div>
       </div>
     </>

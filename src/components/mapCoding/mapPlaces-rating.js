@@ -8,76 +8,48 @@ let YOUR_API_KEY = 'AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs';
 
 // const ramenIcon = {url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
 //       scaledSize: new window.google.maps.Size(25,25)}
-let restoPlaces=['eating'];
 
 const MyMap = (mapTitle) => {
   const [map, setTheMap] = useState(null);
   const [placesService, setPlacesService] = useState(null);
   const [restoList,setRestolist] = useState([]);
   const [restoMarker, setRestoMarker] = useState([]);
+  const [cityCoords,setCityCoords] = useState([]);
   const location = useLocation();
   const markerArr = ['go'];
+  let  restoPlaces=['eating']; // initialize array
 
-// ==== update page to see map and markers of restos =====
-  // useEffect(() => {
-    // const defPos = {lat: 45.5591827, lng: -73.7118733};
-    // get position of user
-    // const loader = new Loader({
-    //   apiKey: YOUR_API_KEY,
-    //   libraries: ['places','marker'],
-    // })
-    // loader.load()
-    // .then(() => {
-    //     let defPos;
-    //     if(restoMarker.length === 0){
-    //       defPos = {lat: 45.5591827, lng: -73.7118733};
-    //     }else{
-    //       defPos = restoMarker[0];
-    //     }
-    //     const map = new window.google.maps.Map(document.getElementById('map'), {
-    //       center: defPos,
-    //       zoom: 12
-    //     })
-
-        // const defPos = {lat: 45.5591827, lng: -73.7118733};
-  //       const marker1 = new window.google.maps.Marker({
-  //         position: defPos,
-  //         map: map,
-  //         title: restoMarker[1],
-  //         }
-  //       )
-
-  //       console.log(restoMarker);
-  //   })
-  // },[restoMarker]);
-    // setTheMap(map);
 
   // ========== load list of restos based on user location =====
   useEffect(() => { 
       // const defPos = {lat: 45.5591827, lng: -73.7118733};
       // get position of user
       const loader = new Loader({
-        apiKey: YOUR_API_KEY,
-        libraries: ['places','marker'],
-    })
-    loader.load()
-    .then(() => {
-      const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
+          apiKey: YOUR_API_KEY,
+          libraries: ['places','marker'],
+      })
+      loader.load()
+      .then(() => {
+        const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
 
-      setPlacesService(placesService);
-      // console.log('setPlacesService: ',placesService);
-    })
-    .then(()=>{
-        const defPos = {lat: 45.5591827, lng: -73.7118733};
-       
+        setPlacesService(placesService);
+      })
+      .then(()=>{
+        let defPos;
+        if(cityCoords.length === 0){
+          // default values if cityCoords is empty
+           defPos = {lat: 45.5591827, lng: -73.7118733};
+        }else{
+           defPos = {lat:cityCoords.lat,lng:cityCoords.lng};
+        }
+        // console.log('city is at: ',defPos);
+
         let mappy = new window.google.maps.Map(document.getElementById('map'), {
           center: defPos,
           zoom: 12
         })
         setTheMap(mappy);
 
-   //  .then(()=>{
-        // const defPos = {lat: 45.5591827, lng: -73.7118733};
         let marker = new window.google.maps.Marker({
             position: defPos,
             map: map,
@@ -85,30 +57,23 @@ const MyMap = (mapTitle) => {
             // icon: 'pin.png'
         });
         marker.setMap(mappy);
-    })
-   
-      
-    //     handleSearch();
-      // setRestolist([]);
-    // handleSearch();
-  }, []);
+      })
+      .then(()=>{
+        window.google.maps.event.trigger(map,'idle');
+      })
+  },[cityCoords]);
 
   // ========= load markers on to map =======
   useEffect(()=>{
-     
-        // let markermap = new window.google.maps.Map(document.getElementById('map'), {
-        //     center: userCity, // or center of selected city
-        //     zoom: 12
-        //   })
-
         for(let x = 0;x<restoMarker.length;x++){
             let lat = restoMarker[x].lat;
             let lng = restoMarker[x].lng;
             let resto = restoMarker[x].resto;
          
-            console.log(lat,lng,resto);
+            // console.log(lat,lng,resto);
             const markerIcon = {
-              url: ramenIcon,
+              // url: ramenIcon,
+              url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
               scaledSize: new window.google.maps.Size(35,35),
             };
 
@@ -124,39 +89,28 @@ const MyMap = (mapTitle) => {
 
 // ========== default coordinates ======================
 
-  let rawPos = {lat: 46.04347772938561,lng:-73.82687055753087 };
-  let mtlPos = {lat: 45.5591827, lng: -73.7118733};
+  // let rawPos = {lat: 46.04347772938561,lng:-73.82687055753087 };
+  // let mtlPos = {lat: 45.5591827, lng: -73.7118733};
 // let circlePos = {radius: 100,lat: 45.5591827, lng: -73.7118733,};// this should be same as user coordinates
 
-// === functions to get user loc / list restos ===============
-  function handleSearch(userCity) {
-    console.log('city is at: ',userCity);
-    restoPlaces=['eating'];
-
+// ===== google api call to search for restos =====
+  function handleSearch(cityCoords) {
     let request = {
-      location: new window.google.maps.Circle(userCity),
-      query: 'ramen'
+      location: new window.google.maps.Circle(cityCoords),
+      query: 'ramen',
     }
     placesService.textSearch(request,callback);
   }; // end of handleSearch()
 
     // placesService.nearbySearch(request,callback);
     // placesService.findPlaceFromQuery(request,callback);
-  function callback(results,status,pagination){
-    // const ramenIcon = {
-    //   url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
-    //   scaledSize: new window.google.maps.Size(25,25)
-    // }
-    // use above to for ramen icons as marker
-     
 
+// === callback function when api call succesful ====
+  function callback(results,status,pagination){
     if (status === 'OK') {
-      for (let x of results){
-        // populate list of restos
-        
+      for (let x of results){ // populate list of restos
         if(x.name === 'KINTON RAMEN'){ // check for doubles
           let addr = 'KINTON RAMEN - '+ ramenAddy(x.formatted_address);
-          // checkDoubles(addr);
           if(!restoPlaces.includes(addr)){
               restoPlaces.push(addr);
             }
@@ -170,13 +124,11 @@ const MyMap = (mapTitle) => {
               restoPlaces.push(x.name);
           }
         }
-        makeMarker(x);        
+        makeMarker(x);  
+        // console.log(x.name);      
       }
       let first = restoPlaces.shift();
-      console.log(restoPlaces);
-      // console.log(markerArr);
       let second  = markerArr.shift();
-      console.log(markerArr);
         setRestolist(restoPlaces);
         setRestoMarker(markerArr);
 
@@ -186,12 +138,14 @@ const MyMap = (mapTitle) => {
     }
   }; //end of callback();
 
+//==== parse data to isolate postal code ====
     function getPostal(address){
       let provpost = address.split(',');
       let pos = provpost[2].split(' ');
       let postal = pos[2]+' '+pos[3];
       return postal;
     }
+//=== parse data to isolate address ====
     function ramenAddy(address){
       let addy = address.split(',');
       let street = addy[0];
@@ -200,49 +154,16 @@ const MyMap = (mapTitle) => {
       return road;
     };
 
+//==== set coordiantes for resto markers =====
     function makeMarker(restoDetails){
-      
-       // const map = new window.google.maps.Map(document.getElementById('map'), {
-       //    center:{lat,lng}, // or center of selected city
-       //    zoom: 12
-       //  })
-       //    let marker = new window.google.maps.Marker({
-       //      position: {lat,lng},
-       //      map: map,
-       //      title: restoDetails.name,
-       //      // icon: 'pin.png'
-       //      // label: 'restos'
-       //    })
           let restObj = {};
           restObj.lat = restoDetails.geometry.location.lat();
           restObj.lng = restoDetails.geometry.location.lng();
           restObj.resto = restoDetails.name;
-        
           markerArr.push(restObj);
-
-          // setRestoMarker(markerLL);
-          // setRestoMarker(markerLL);
-      // })
-      // setRestoMarker(markerLL);
     }
 
-    function placeMarker(){
-      let lat = 9;
-      let lng = 0;
-      const map = new window.google.maps.Map(document.getElementById('map'), {
-          center:{lat,lng}, // or center of selected city
-          zoom: 12
-        })
-          let marker = new window.google.maps.Marker({
-            position: {lat,lng},
-            map: map,
-            // title: restoDetails.name,
-            // icon: 'pin.png'
-            // label: 'restos'
-          })
-    }
- 
-
+// ==== check if user has denied geolocation access ====
   let access;
   function checkAccess(){
     console.log(access);
@@ -253,6 +174,7 @@ const MyMap = (mapTitle) => {
       }
   }
 
+//======  get geolocation of user =======
   function getUser(){
         new Promise(function(resolve,reject){
             navigator.geolocation.getCurrentPosition(resolve,reject);
@@ -275,9 +197,10 @@ const MyMap = (mapTitle) => {
           });
   }
 
-  let userCity;
+  // ======= city coordinates + radius search to populate resto menu ==========
   const getCity = ((selection)=>{
     let city = selection.target.value;
+    let userCity;
     console.log('city is: ',city);
     switch(city){
       case 'Montreal':
@@ -295,14 +218,21 @@ const MyMap = (mapTitle) => {
       default:
         userCity = {radius: 100,lat: 45.5041905839693, lng:-73.57431928743786};//default is Montreal
     }
+    setCityCoords(userCity);
   })
 
-  let searchTitle = 'Select your restaurant';
+  // === change title depending report or rating page =====
+  let searchTitle, restoComm, listComm;
+  if(location.pathname === '/report'){
+    searchTitle = 'Select your restaurant';
+    restoComm = 'By clicking below, the app will access your location data to give you a list of restaurants nearest to you'
+    listComm = 'If you would rather not give your location data, choose your city and find your restaurant in the list';
+  }else{
+    searchTitle = 'Find the best ramen closest to you';
+    restoComm = 'By clicking below, the app will access your location data to give you ramen rankings nearest to you'
+    listComm = 'If you would rather not give your location data, choose your city to find the top bowl of ramen of the city';
+  }
 
-  let pathname = location.pathname;
-
-
-  if(pathname === '/report'){ 
   return (
     <>
       <div className="starBack">
@@ -310,12 +240,16 @@ const MyMap = (mapTitle) => {
             <span>{searchTitle}</span>
             <div className="restoLocate">
               <div className="restoBlock">
-                <h6 className="ratingComm">By clicking below, the app will access your location data to give you a list of restaurants nearest to you</h6>
+                <h6 className="ratingComm">{restoComm}
+                {/*By clicking below, the app will access your location data to give you a list of restaurants nearest to you*/}
+                </h6>
                    <button onClick={checkAccess} type="button">Ramen joints near me
                    </button>
               </div>
               <div className="restoBlock">
-                <h6 className="ratingComm">If you would rather not give your location data, choose your city and find your restaurant in the list</h6>
+                <h6 className="ratingComm">{listComm}
+                {/*If you would rather not give your location data, choose your city and find your restaurant in the list*/}
+                </h6>
                 <select onChange={getCity}>
                   <option></option>
                   <option value='Montreal' name='city'>Montreal</option>
@@ -323,7 +257,7 @@ const MyMap = (mapTitle) => {
                   <option value='Vancouver' name='city'>Vancouver</option>
                   <option value='Ottawa' name='city'>Ottawa</option>
                 </select>
-               <button onClick={()=>handleSearch(userCity)} type="button">GO
+               <button onClick={()=>handleSearch(cityCoords)} type="button">GO
                </button>
               </div>
             </div>
@@ -337,64 +271,11 @@ const MyMap = (mapTitle) => {
                   })}
               </select>
             </div>
-          {/*  <div class="restoBlock">
-               <button onClick={handleSearch} type="button">Find my restaurant
-               </button>
-            </div>*/}
           </div>
         </div>
       </div>
     </>
-  )
-  }else if(pathname = '/report'){
-    return(
-      <>
-        {/*<div id="map">
-          <span>geomap</span>
-        </div>*/}
-        {/*{console.log('re-render')}*/}
-        {/*{console.log(restoList)}*/}
-       
-
-        <div className="starBack">
-            {/*<TheMap />*/}
-          <div className="ratingLabel"> 
-              <span>{searchTitle}</span>
-              <div className="restoLocate">
-                <div className="restoBlock">
-                  <h6 className="ratingComm">By clicking below, the app will access your location data to give you a list of restaurants nearest to you</h6>
-                     <button onClick={checkAccess} type="button">Ramen joints near me
-                     </button>
-                </div>
-                <div className="restoBlock">
-                  <h6 className="ratingComm">If you would rather not give your location data, choose your city and find your restaurant in the list</h6>
-                  <select onChange={getCity}>
-                    <option></option>
-                    <option value='Montreal' name='city'>Montreal</option>
-                    <option value='Toronto' name='city'>Toronto</option>
-                    <option value='Vancouver' name='city'>Vancouver</option>
-                    <option value='Ottawa' name='city'>Ottawa</option>
-                  </select>
-                 <button onClick={()=>handleSearch(userCity)} type="button">GO
-                 </button>
-                </div>
-              </div>
-            <div id="restoSelectBlock">
-              <div className="selectResto">
-                <select className="select-color form-select form-select-lg mb-3 " aria-label="Default select example">
-                  {/*<option value="" />*/}
-                    {restoList.map((restoNames,i) =>{
-                      return <option key={i} value={restoNames} name="resto">{restoNames}
-                      </option>
-                    })}
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
+  );
 };
 
 export default MyMap;
