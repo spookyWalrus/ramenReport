@@ -4,8 +4,9 @@ import ReportHeader from './ReportHeader';
 import StarRating from '../components/StarRating';
 import {DataContext} from '../App';
 // import MapContainer from '../components/mapCoding/mapCode-geo';
-import TheMap from '../components/mapCoding/mapBasic';
-import MyMap from '../components/mapCoding/mapPlaces-orig';
+
+// import TheMap from '../components/mapCoding/mapBasic';
+import MyMap from '../components/mapCoding/mapPlaces-report';
 
 import './Report.css';
 // const StarSet = createContext();
@@ -97,6 +98,7 @@ export default function Report() {
 		}
 	},[reportdata])
 
+
 	// let map = TheMap();
 	let title = 'Select your restaurant';
 
@@ -104,11 +106,12 @@ export default function Report() {
 			<div className="reportBack">
 				<ReportHeader />
 				<section className="reportPage">
+
 					{/*<h2 className="reportHeading">Do a Ramen Report</h2> */}
 						{/*<TheMap />*/}
 						<div>
 							{/*<TheMap />*/}
-							{/*<MyMap />*/}
+							<MyMap />
 						</div>
 						<div className="reportForm">
 							<Form method="post" action="/report">
@@ -197,11 +200,9 @@ export default function Report() {
 								<div className="buttonBack">
 									<button className="reportSubmitButton">Submit</button>
 								</div>
-
 							{/*{reportdata && reportdata.error && <p>{reportdata.error}</p>}*/}
 							</Form>
 						</div>
-						
 				</section>
 			</div>
 	)
