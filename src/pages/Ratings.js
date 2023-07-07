@@ -1,5 +1,6 @@
 
 import MyMap from '../components/mapCoding/mapPlaces-rating';
+// import HashLoader from 'react-spinners/HashLoader';
 
 import './Ratings.css';
 import '../components/mapCoding/mapApp.css';
@@ -11,6 +12,12 @@ export default function Ratings() {
         <h1 className="ratingHeading">Ramen Ratings
         </h1>
         <MyMap />
+      {/*  <HashLoader
+          color="#fff"
+          size={20}
+          loading={loadingInProgress}
+          id="loadProg"
+        />*/}
         <div id="map" className="starBack">geomap</div>
       </div>
       <div className="ratingBlock">

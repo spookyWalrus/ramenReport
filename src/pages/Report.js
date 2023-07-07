@@ -106,21 +106,11 @@ export default function Report() {
 			<div className="reportBack">
 				<ReportHeader />
 				<section className="reportPage">
-
-					{/*<h2 className="reportHeading">Do a Ramen Report</h2> */}
-						{/*<TheMap />*/}
 						<div>
-							{/*<TheMap />*/}
 							<MyMap />
 						</div>
 						<div className="reportForm">
 							<Form method="post" action="/report">
-						{/*			<div className="starBack">
-								<div className="ratingLabel"> 
-										<span>What Restaurant ?</span>*/}
-										<MyMap mapTitle={title}/>
-									{/*	<button className="">Find my restaurant based on my location</button>
-										<input type="hidden" name="resto" value ={noodleRate} />*/}
 								<div className="starBack">
 									<div className="ratingLabel"> 
 										<span>Rate the noodles</span>
