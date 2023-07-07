@@ -4,6 +4,7 @@ import ramenIcon from './ramen.png';
 import {useLocation} from 'react-router-dom';
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 // import {MagnifyingGlass} from "react-loader-spinner";
+import PulseLoader from 'react-spinners/PulseLoader';
 
 let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
 
@@ -283,20 +284,17 @@ const MyMap = (mapTitle) => {
             </div>
           <div id="restoSelectBlock">
             {/*<div className="selectResto">*/}
+              <div className="loadSpinner">
                {loading ?
-                   <MagnifyingGlass 
-                      visible={true}
-                      height="50"
-                      width="50"
-                      ariaLabel="MagnifyingGlass-loading"
-                      wrapperStyle={{}}
-                      wrapperClass="MagnifyingGlass-wrapper"
-                      glassColor = '#c0efff'
-                      color = '#e15b64'
+                  <PulseLoader
+                        color="#fff"
+                        size={10}
+                        loading={loading}
+                        id="loadProg"
                       />
-
-                  : <MagnifyingGlass visible={false} />
+                    : <div></div>
                 }
+              </div>
               <div className="selectResto">
                 <select className="select-color form-select form-select-lg mb-3 " aria-label="Default select example">
                       {restoList.map((restoNames,i) =>{

@@ -32,7 +32,7 @@ button{
 
 #restoSelectBlock{
 /*  display: inline;*/
-  margin-top: 5%;
+/*  margin-top: 5%;*/
 }
 .select-color{
   background-color: #fff;
@@ -70,4 +70,8 @@ button{
 .restoLocate{
   margin-top: 5%;
   display: inline-flex;
+}
+
+.loadSpinner{
+  display: inline-block;
 }
