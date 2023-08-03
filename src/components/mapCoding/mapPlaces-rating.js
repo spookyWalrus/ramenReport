@@ -361,17 +361,17 @@ const MyGraph = (mapTitle) => {
                </button>
               </div>
             </div>
-           {loading ?
               <div id="restoSelectBlock">
-                <HashLoader
-                  color="#fff"
-                  size={20}
-                  loading={loading}
-                  id="loadProg"
-                />
+                {loading ?
+                  <HashLoader
+                    color="#fff"
+                    size={20}
+                    loading={loading}
+                    id="loadProg"
+                  />
+                  : <div></div>
+                }
               </div>
-              : <div></div>
-            }
         </div>
       </div>
       <div className="starBack">
