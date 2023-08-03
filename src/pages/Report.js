@@ -108,6 +108,7 @@ export default function Report() {
 				<section className="reportPage">
 						<div>
 							<MyMap />
+							<div id="map" className="starBack">geomap</div>
 						</div>
 						<div className="reportForm">
 							<Form method="post" action="/report">
