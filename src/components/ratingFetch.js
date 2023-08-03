@@ -51,7 +51,7 @@ function sortData(data){
         let resto = v.resto;
         return  {[resto]: total }
    })
-	return   ascendata(ranking);
+	return ascendata(ranking);
 }
 
 function ascendata(ranking){
