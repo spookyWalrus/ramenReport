@@ -60,6 +60,7 @@ const MyMap = (mapTitle) => {
             // icon: 'pin.png'
         });
         marker.setMap(mappy);
+        // the is a googlemaps function, not a hook
       })
       .then(()=>{
         window.google.maps.event.trigger(map,'idle');
@@ -68,6 +69,7 @@ const MyMap = (mapTitle) => {
 
   // ========= load markers on to map =======
   useEffect(()=>{
+    if(map){
         // for(let x = 0;x<restoMarker.length;x++){
         const markers = restoMarker.map((info,i)=>{
             let lat = info.lat;
@@ -87,13 +89,14 @@ const MyMap = (mapTitle) => {
               title: resto,
               icon: markerIcon,
             });
-            marker.setMap(map);
+            marker.setMap(map); //this is a googlemaps api function, not a hook
             return marker;
         })
           new MarkerClusterer({markers,map});
           // marker.setMap(map);
         // }
         setLoading(false);
+    }
   },[restoMarker])
 
 // ========== default coordinates ======================
@@ -178,9 +181,10 @@ const MyMap = (mapTitle) => {
     function setHooks(){
       let first = restoPlaces.shift();
       let second  = markerArr.shift();
-      console.log(restoPlaces);
+      // console.log('loaded: ',restoPlaces);
         setRestolist(restoPlaces);
         setRestoMarker(markerArr);
+        setLoading(false);
     }
 
 // ==== check if user has denied geolocation access ====
