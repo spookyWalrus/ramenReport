@@ -21,9 +21,9 @@ export default function Ratings() {
           id="loadProg"
         />*/}
         {/*<div id="map" className="starBack">geomap</div>*/}
-      </div>
-      <div className="ratingBlock">
-        <ChartTest />
+        <div class="chart-container">
+            <ChartTest />
+        </div>
       </div>
     </div>
   );
