@@ -22,7 +22,7 @@ function ratingFetch(data){
 	
 
 // === get ratings data ====
-	let dbData;
+	// let dbData;
 	return fetch('http://localhost:3000/ratings',
 		{
           method: 'POST',

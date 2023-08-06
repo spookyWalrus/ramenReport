@@ -52,21 +52,23 @@
 /*	display: block;*/
 }
 
+
 .chart-container{
 	margin-top: 5%;
 	position: relative;
 	justify-content: center;
-
-  	height: 90vh;
-  	width: 60vw;
+	text-align: center;
+  	height: 100vh;
+  	width: auto;
 }
 @media only screen and (max-width: 550px){
 	.chart-container{
-	margin-top: 8%;
+	margin: 8% 0% 8% 5%;
 	position: relative;
 	justify-content: center;
   	height: 100vh;
-  	width: 60vw;
+/*  	width: 60vw;*/
+	width: auto;
   	white-space: initial ;
 	}
 }

@@ -15,7 +15,7 @@ let YOUR_API_KEY = 'AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs';
 // const ramenIcon = {url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
 //       scaledSize: new window.google.maps.Size(25,25)}
 
-const MyGraph = (mapTitle) => {
+const MyRating = ({restoRatings}) => {
 
   const [map, setTheMap] = useState(null);
   const [placesService, setPlacesService] = useState(null);
@@ -194,8 +194,10 @@ const MyGraph = (mapTitle) => {
 
 //=== fetch ratings data from server =====
   async function getRatings(){
+
       let dbdata = await ratingFetch(restoPlaces);
-      console.log(dbdata);
+      // console.log(dbdata);
+      return restoRatings(dbdata);
   }
 
 // ==== map returned DB data into descending order ====
@@ -388,5 +390,4 @@ const MyGraph = (mapTitle) => {
   );
 };
 
-export default MyGraph;
-
+export default MyRating;
