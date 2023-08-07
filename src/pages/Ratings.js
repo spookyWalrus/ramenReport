@@ -5,7 +5,7 @@ import MyRating from '../components/mapCoding/mapPlaces-rating';
 import './Ratings.css';
 import '../components/mapCoding/mapApp.css';
 
-import Chart from '../components/chart.js';
+import RamenChart from '../components/chart.js';
 
 
 export default function Ratings() {
@@ -26,8 +26,8 @@ export default function Ratings() {
           <div class="chart-container">
             <h3>Best Ramen in your area</h3>
                 {theRatings.length>1 ? 
-                <Chart dbratings={theRatings}/> 
-                : <Chart />
+                <RamenChart dbratings={theRatings}/> 
+                : <RamenChart />
                 } 
           </div>
         </div>

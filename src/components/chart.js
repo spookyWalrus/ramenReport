@@ -9,6 +9,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar, getElementAtEvent, getDatasetAtEvent} from 'react-chartjs-2';
+import {Chart} from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(
   CategoryScale,
@@ -19,25 +21,26 @@ ChartJS.register(
   Legend
 );
 
-ChartJS.defaults.font.size = 22;
+Chart.register(ChartDataLabels);
+
+ChartJS.defaults.font.size = 20;
 ChartJS.defaults.color = '#f0bf0e';
+
 
 export const options = {
   indexAxis: 'y',
+  responsive: true,
+  maintainAspectRatio: false,
+  // barThickness: 'flex',
   elements: {
     bar: {
       borderWidth: 2,
     },
   },
-  responsive: true,
   plugins: {
     legend: {
       position: 'right',
     },
-    // title: {
-    //   display: true,
-    //   text: 'Best Ramen in your area',
-    // },
     legend:{
       labels:{
         font:{
@@ -45,10 +48,13 @@ export const options = {
         },
         color: '#666'
       }
+    },
+    datalabels:{
+      anchor: 'end',
+      offset: 0,
+      align: 'right'
     }
   },
-  responsive: true,
-  maintainAspectRatio: false,
   scales:{
     x:{
       ticks:{
@@ -69,7 +75,7 @@ export const options = {
   }
 };
  
-const Chart =({dbratings}) => {
+const RamenChart =({dbratings}) => {
   const theDatas = [];
   const labels = [];
   if(dbratings){
@@ -85,9 +91,9 @@ const Chart =({dbratings}) => {
   const data = {
     labels,
     datasets: [
-      {
-        label: 'Rank out of 5',
+      { label: 'Rank out of 5',
         data: theDatas,
+        title: theDatas,
         borderColor: '#A154DB',
         backgroundColor: '#5720a8'
       }
@@ -113,4 +119,4 @@ const Chart =({dbratings}) => {
           />;
 }
 
-export default Chart;
+export default RamenChart;
