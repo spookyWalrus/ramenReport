@@ -72,6 +72,11 @@ export const options = {
         }
       }
     }
+  },
+  layout: {
+    padding: {
+      right: 20
+    }
   }
 };
  
@@ -81,7 +86,12 @@ const RamenChart =({dbratings}) => {
   if(dbratings){
     for (const obj of dbratings){
       for(const item in obj){
-        labels.push(item); 
+        if(item.length > 11){
+          const label = item.split(' ');
+          labels.push(label);
+        }else{
+          labels.push(item); 
+        }
         theDatas.push(obj[item]);
       }
     }
