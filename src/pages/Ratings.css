@@ -63,7 +63,7 @@
 }
 @media only screen and (max-width: 550px){
 	.chart-container{
-	margin: 8% 0% 8% 5%;
+	margin: 8% 0% 8% 0%;
 	position: relative;
 	justify-content: center;
   	height: 100vh;
