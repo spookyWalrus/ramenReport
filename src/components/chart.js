@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Bar, getElementAtEvent, getDatasetAtEvent} from 'react-chartjs-2';
+import { Bar, getElementAtEvent,getElementsAtEvent, getDatasetAtEvent} from 'react-chartjs-2';
 import {Chart} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -46,14 +46,21 @@ export const options = {
         font:{
           size: 16,
         },
-        color: '#666'
+        color: '#666',
       }
     },
     datalabels:{
       anchor: 'end',
       offset: 0,
       align: 'right'
-    }
+    },
+    tooltip:{
+      backgroundColor: '#DB5495',
+      borderColor: '#00FFFF'
+    },
+      calbacks:{
+        title: (data) => { return data[0].parsed.x } 
+      }
   },
   scales:{
     x:{
@@ -77,7 +84,8 @@ export const options = {
     padding: {
       right: 20
     }
-  }
+  },
+
 };
  
 const RamenChart =({dbratings}) => {
@@ -110,22 +118,23 @@ const RamenChart =({dbratings}) => {
     ],
   };
 
-  // const chartRef = useRef(null);
-  // const onClick = (event) => {
-  //   let point = getElementAtEvent(chartRef.current, event);
+  const chartRef = useRef(null);
+  const onClick = (event) => {
+    let point = getElementAtEvent(chartRef.current, event);
+    // let point = getElementsAtEvent(chartRef.current, event);
     // let point = getDatasetAtEvent(chartRef.current, event);
-
-    // console.log('index: ',point[0].index,)
-    // console.log('value: ',point[0].element.$context.raw)
+    let idx = point[0].index;
+    console.log('index: ',idx)
+    console.log('resto: ',labels[idx]);
     // console.log(theDatas);
     // console.log(labels);
-  // }
+  }
 
   return <Bar 
             options={options} 
             data={data} 
-            // ref={chartRef} 
-            // onClick={onClick} 
+            ref={chartRef} 
+            onClick={onClick} 
           />;
 }
 
