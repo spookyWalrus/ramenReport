@@ -122,21 +122,25 @@ const MyMap = (mapTitle) => {
   function callback(results,status,pagination){
     if (status === 'OK') {
       for (let x of results){ // populate list of restos
-        if(x.name === 'KINTON RAMEN'){ // check for doubles
-          let addr = 'KINTON RAMEN - '+ ramenAddy(x.formatted_address);
-          if(!restoPlaces.includes(addr)){
-              restoPlaces.push(addr);
-            }
-        }else if(x.name === 'Kumamoto Ramen'){// check for doubles
-          let addr = 'Kumamoto Ramen - '+ ramenAddy(x.formatted_address);
-           if(!restoPlaces.includes(addr)){
-              restoPlaces.push(addr);
-            }
-        }else{
-          if(!restoPlaces.includes(x.name)){
+        console.log(x);
+        // if(x.name === 'KINTON RAMEN'){ // check for doubles
+        //   let addr = 'KINTON RAMEN - '+ ramenAddy(x.formatted_address);
+        //   if(!restoPlaces.includes(addr)){
+        //       restoPlaces.push(addr);
+        //     }
+        // }else if(x.name === 'Kumamoto Ramen'){// check for doubles
+        //   let addr = 'Kumamoto Ramen - '+ ramenAddy(x.formatted_address);
+        //    if(!restoPlaces.includes(addr)){
+        //       restoPlaces.push(addr);
+        //     }
+        // }else{
+        //   if(!restoPlaces.includes(x.name)){
+        //       restoPlaces.push(x.name);
+        //   }
+        // }
+        if(!restoPlaces.includes(x.name)){
               restoPlaces.push(x.name);
           }
-        }
         makeMarker(x);  
         // console.log(x.name);      
       }
