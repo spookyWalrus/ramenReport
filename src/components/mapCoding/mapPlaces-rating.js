@@ -162,22 +162,25 @@ const MyRating = ({restoRatings}) => {
 
 //=====  parse data returned from googlemaps api and set to array
   function parseRestos(searchResult){
-    // for (let x = 0;x<limit;x++){
+
     for (let x of searchResult){ // populate list of restos
-      if(x.name === 'KINTON RAMEN'){ // check for doubles
-        let addr = 'KINTON RAMEN - '+ ramenAddy(x.formatted_address);
-        if(!restoPlaces.includes(addr)){
-            restoPlaces.push(addr);
-          }
-      }else if(x.name === 'Kumamoto Ramen'){// check for doubles
-        let addr = 'Kumamoto Ramen - '+ ramenAddy(x.formatted_address);
-         if(!restoPlaces.includes(addr)){
-            restoPlaces.push(addr);
-          }
-      }else{
-        if(!restoPlaces.includes(x.name)){
-            restoPlaces.push(x.name);
-        }
+      // if(x.name === 'KINTON RAMEN'){ // check for doubles
+      //   let addr = 'KINTON RAMEN - '+ ramenAddy(x.formatted_address);
+      //   if(!restoPlaces.includes(addr)){
+      //       restoPlaces.push(addr);
+      //     }
+      // }else if(x.name === 'Kumamoto Ramen'){// check for doubles
+      //   let addr = 'Kumamoto Ramen - '+ ramenAddy(x.formatted_address);
+      //    if(!restoPlaces.includes(addr)){
+      //       restoPlaces.push(addr);
+      //     }
+      // }else{
+      //   if(!restoPlaces.includes(x.name)){
+      //       restoPlaces.push(x.name);
+      //   }
+      // }
+     if(!restoPlaces.includes(x.name)){
+          restoPlaces.push(x.name);
       }
       // makeMarker(x);  
     }
