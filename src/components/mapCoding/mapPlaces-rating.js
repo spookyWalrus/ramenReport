@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect,useContext } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
-import ramenIcon from './ramen.png';
+// import ramenIcon from './ramen.png';
 import {useLocation} from 'react-router-dom';
 import {DataContext} from '../../App';
 // import { MarkerClusterer } from "@googlemaps/markerclusterer";

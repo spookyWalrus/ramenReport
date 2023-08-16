@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Bar, getElementAtEvent,getElementsAtEvent, getDatasetAtEvent} from 'react-chartjs-2';
+import { Bar, getElementAtEvent} from 'react-chartjs-2';
 import {Chart} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -38,10 +38,8 @@ export const options = {
     },
   },
   plugins: {
-    legend: {
-      position: 'right',
-    },
     legend:{
+      position: 'right',
       labels:{
         font:{
           size: 16,
