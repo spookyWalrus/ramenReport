@@ -1,6 +1,5 @@
-import React, { useState,useEffect } from "react";
+import React, { useState} from "react";
 import MyRating from '../components/mapCoding/mapPlaces-rating';
-// import HashLoader from 'react-spinners/HashLoader';
 
 import './Ratings.css';
 import '../components/mapCoding/mapApp.css';

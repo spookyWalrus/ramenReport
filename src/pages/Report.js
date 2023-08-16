@@ -5,7 +5,6 @@ import StarRating from '../components/StarRating';
 import {DataContext} from '../App';
 // import MapContainer from '../components/mapCoding/mapCode-geo';
 
-// import TheMap from '../components/mapCoding/mapBasic';
 import MyMap from '../components/mapCoding/mapPlaces-report';
 
 import './Report.css';
@@ -100,7 +99,6 @@ export default function Report() {
 
 
 	// let map = TheMap();
-	let title = 'Select your restaurant';
 
 	return(
 			<div className="reportBack">

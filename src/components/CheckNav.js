@@ -1,4 +1,4 @@
-import {createContext} from 'react';
+// import {createContext} from 'react';
 // set Datacontext for log in status
 // const DataContext = createContext({});
 
@@ -56,12 +56,12 @@ export const sendLoginAction = async({ request })=> {
         return response;
     }
 
-    function theError(){
-        response =  {
-                status: false
-            }
-        return response;
-    }
+    // function theError(){
+    //     response =  {
+    //             status: false
+    //         }
+    //     return response;
+    // }
   
 
     // send your post request via fetch() and verify credentials

@@ -14,12 +14,13 @@ export const sendReportAction = async({ request })=> {
   }
 
   let response;
-  function theError(){ // error call back function
-    response =  {
-        status: false
-    }
-    return response;
-  }
+  
+  // function theError(){ // error call back function
+  //   response =  {
+  //       status: false
+  //   }
+  //   return response;
+  // }
   // send your post request
   if(!(report.logstat)){
     console.log('Not logged in');
