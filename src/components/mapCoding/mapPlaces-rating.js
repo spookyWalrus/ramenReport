@@ -329,8 +329,9 @@ const MyRating = ({restoRatings}) => {
   }else{
 
     searchTitle = 'Find the best ramen';
-    restoComm = 'By clicking below, the app will access your location data to give you ramen rankings nearest to you'
-    listComm = 'If you would rather not give your location data, choose your city to find the top bowl of ramen of the city';
+    // restoComm = 'By clicking below, the app will access your location data to give you ramen rankings nearest to you'
+    restoComm= '(locate me)';
+    listComm = '(keep my location private)';
   }
 
 
@@ -343,17 +344,18 @@ const MyRating = ({restoRatings}) => {
             <span>{searchTitle}</span>
             <div className="restoLocate">
               <div className="restoBlock">
-                <h6 className="ratingComm">{restoComm}
+                {/*<h6 className="ratingComm">{restoComm}*/}
                 {/*By clicking below, the app will access your location data to give you a list of restaurants nearest to you*/}
-                </h6>
+                {/*</h6>*/}
 
                    <button onClick={()=>{isCityWide(false)}} type="button">Find the best Ramen closest to me
                    </button>
+                   <h6 className="ratingComm">{restoComm}</h6>
               </div>
               <div className="restoBlock">
-                <h6 className="ratingComm">{listComm}
+                {/*<h6 className="ratingComm">{listComm}*/}
                 {/*If you would rather not give your location data, choose your city and find your restaurant in the list*/}
-                </h6>
+                {/*</h6>*/}
                 <select onChange={getCity}>
                   <option></option>
                   <option value='Montreal' name='city'>Montreal</option>
@@ -364,6 +366,7 @@ const MyRating = ({restoRatings}) => {
 
                <button onClick={()=>{isCityWide(true)}} type="button">FIND THE TOP RAMEN
                </button>
+               <h6 className="ratingComm">{listComm}</h6>
               </div>
             </div>
               <div id="restoSelectBlock">
@@ -379,7 +382,7 @@ const MyRating = ({restoRatings}) => {
               </div>
         </div>
       </div>
-      <div className="starBack">
+      {/*<div className="starBack">
         <div> 
           <h3>{top3}</h3>
           <div className="top3Block">
@@ -388,7 +391,7 @@ const MyRating = ({restoRatings}) => {
             <Top3Ramen />
           </div>
         </div> 
-      </div>
+      </div>*/}
     </>
   );
 };
