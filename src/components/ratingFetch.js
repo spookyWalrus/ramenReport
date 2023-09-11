@@ -23,7 +23,10 @@ function ratingFetch(data){
 
 // === get ratings data ====
 	// let dbData;
-	return fetch('http://localhost:3000/ratings',
+	return fetch(
+// 		'postgres://spookyWalrus:
+// @ep-hidden-block-00474811.us-east-2.aws.neon.tech/ramenDB',
+		'http://localhost:3000/ratings',
 		{
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
