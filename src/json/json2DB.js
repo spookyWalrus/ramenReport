@@ -1,11 +1,15 @@
-import ramenPlaces from '../json/ramenPlaces.json';
+// import ramenPlaces from '../json/ramenPlaces.json';
+// import ramenPlaces from '../json/restoFile.json';
+// import restoFile from '../json/restoFile.json';
+// import restoFile from './restoFile-12k.json';
 
 // console.log(ramenPlaces.features[0].geometry.cocordinates)
-
-let obj = ramenPlaces.features;
-// console.log(obj);
+// console.log(restoFile);
+let obj = restoFile.array;
+// console.log(obj)
 let nuPlaces=[];
-let places= obj.map((item,i) =>{
+let places = [];
+let places = obj.map((item,i) =>{
 	let place = {};
 		place['longlat'] = item.geometry.coordinates;
 		place.URL = item.properties["Google Maps URL"];
@@ -15,6 +19,8 @@ let places= obj.map((item,i) =>{
 		// nuPlaces.push(place);
 		return place;
 })
+
+
 // console.log(places);
 let remapData = places.map((obj,i) =>{
 	for(let k in obj){
@@ -117,8 +123,9 @@ function theResponse(status){ // error call back function
 
 let num=0;
 let data;
-function loopData(num){
+export default function loopData(num){
 	console.log('num is at: ',num);
+	console.log('data is: ',obj);
 
 	if(num>0 && num<remapData.length){
    	data = remapData[num];
@@ -132,12 +139,12 @@ function loopData(num){
 }
 
 // fetch call to enter into server
-// function intoDB(data){ 
-// 	console.log(data);
-// 	return theResponse(true);
-// }
+function intoDB(data){ 
+	console.log(data);
+	return theResponse(true);
+}
 
-function intoDB(data) { 
+function intoDBB(data) { 
 		fetch('http://localhost:3000/json2db',
 		  {  method: 'post',
 		    headers: {'Content-Type': 'application/json'},
