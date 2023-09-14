@@ -20,13 +20,13 @@ const MyMap = (mapTitle) => {
   const [restoList,setRestolist] = useState([]);
   const [restoMarker, setRestoMarker] = useState([]);
   const [cityCoords,setCityCoords] = useState([]);
-  const [loading,setLoading] = useState(false)
+  const [loading,setLoading] = useState(false);
+  const [restoNumb, setRestoNumb] = useState('blorg');
   const location = useLocation();
   const markerArr = ['go'];
   let  restoPlaces=['eating']; // initialize array
   let refCoords = useRef();
   let isClose;
-  let restoNumb;
 
 
   // ========== load list of restos based on user location =====
@@ -103,9 +103,15 @@ const MyMap = (mapTitle) => {
           new MarkerClusterer({markers,map});
           // marker.setMap(map);
         // }
-        restoNumb = restoPlaces.length;
-        resultsMessage = "`Number of results: ${restoNumb}`"
+        // restoNumb = restoPlaces.length;
+        // resultsMessage = "`Number of results: ${restoNumb}`"
         setLoading(false);
+        // if(restoNumb.length < 1){
+        //   resultsMessage = 'blorg'
+        // }else {
+        //    console.log('restoNumb: ',restoNumb);
+        //   resultsMessage = "`Number of results: ${restoNumb}`";
+        // }
     }
   },[restoMarker])
 
@@ -119,7 +125,6 @@ const MyMap = (mapTitle) => {
     if(coords.length === 0){
       alert('please pick a city');
     }else{
-      restoNumb = 0;
       setLoading(true);
       let request = {
         // location: new window.google.maps.Circle(cityCoords),
@@ -180,7 +185,9 @@ const MyMap = (mapTitle) => {
       // console.log('loaded: ',restoPlaces);
         setRestolist(restoPlaces);
         setRestoMarker(markerArr);
-        setLoading(false);
+        let total = restoPlaces.length;
+        console.log('total: ',total);
+        setRestoNumb(`Number of results: ${total}`);
     }
 
 // ==== check if user has denied geolocation access ====
@@ -257,14 +264,21 @@ const MyMap = (mapTitle) => {
   // === change title depending report or rating page =====
   let searchTitle, restoComm, listComm, resultsMessage;
   if(location.pathname === '/report'){
-    searchTitle = 'Select your restaurant';
-    restoComm = 'Restaurants within 200m'
-    listComm = 'Restaurants within 10km';
+    searchTitle = 'Find your restaurant on the list or in the map below';
+    restoComm = 'Within 200m'
+    listComm = 'Within 10km of downtown';
   }else{
     searchTitle = 'Find the best ramen closest to you';
     restoComm = 'By clicking below, the app will access your location data to give you ramen rankings nearest to you'
     listComm = 'If you would rather not give your location data, choose your city to find the top bowl of ramen of the city';
   }
+
+  // if(restoNumb = undefined){
+  //   resultsMessage = 'blorg'
+  // }else {
+  //    console.log('restoNumb: ',restoNumb);
+  //   resultsMessage = "`Number of results: ${restoNumb}`";
+  // }
 
   return (
     <>
@@ -302,7 +316,7 @@ const MyMap = (mapTitle) => {
                         loading={loading}
                         id="loadProg"
                       />
-                    : <div>{resultsMessage}</div>
+                    : <div><h6 className="ratingComm">{restoNumb}</h6></div>
                 }
               </div>
               <div className="selectResto">
