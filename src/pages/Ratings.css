@@ -1,40 +1,39 @@
 .ratingBack{
-/*	background-image: url('../img/ramen.jpg');*/
 	background-color: #000;
-	background-size: contain;
-	background-position: 0px 92px;
-	background-attachment: fixed;
-/*	background-repeat: no-repeat;*/
-/*	flex-grow: 1;*/
+/*	background-size: contain;*/
+/*	background-position: 0px 92px;*/
 	height: 100%;
-	color: #fff;
+	width: 100%;
 }
+
+/*========= Rating Header ====== */
 .ratingIntro{
 	position: relative;
 	background-color: rgba(246, 232, 111, 0);
 	margin: 15% 15% 0 15%;
-/*	width: 90%;*/
 	justify-content: center;
-	text-align: left;
-	padding-top: 10px;
+	text-align: center;
+	padding-top: 6%;
 	color:#fff;
 }
 
 .ratingHeading{
-	text-align: center !important;
-}
-.ratingButtBlock{
-	display: flex;
+/*	text-align: center !important;*/
 }
 
-.ratingBlock{
-/*	display: inline-block;*/
+
+/*========= rating block ===== */
+.ratingSection{
 	position: relative;
 /*	text-align: center;*/
 	justify-content: center;
 	margin: 5% 17% 10% 17%;
-/*	height: 100%;*/
-/*	color: green;*/
+}
+
+.ratingBlock{
+	/*position: relative;
+	justify-content: center;
+	margin: 5% 17% 10% 17%;*/
 
 	display: block;
 	flex-wrap: wrap;
@@ -52,7 +51,6 @@
 /*	display: block;*/
 }
 
-
 .chart-container{
 	margin-top: 5%;
 	position: relative;
@@ -60,6 +58,7 @@
 	text-align: center;
   	height: 100vh;
   	width: auto;
+  	color: #fff;
 }
 @media only screen and (max-width: 550px){
 /*	.ratingIntro{*/

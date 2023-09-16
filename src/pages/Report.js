@@ -103,7 +103,7 @@ export default function Report() {
 	return(
 			<div className="reportBack">
 				<ReportHeader />
-				<section className="reportPage">
+				<section className="reportSection">
 						<div>
 							<MyMap />
 							<div id="map" className="starBack">geomap</div>
