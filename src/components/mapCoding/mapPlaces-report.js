@@ -21,7 +21,7 @@ const MyMap = (mapTitle) => {
   const [restoMarker, setRestoMarker] = useState([]);
   const [cityCoords,setCityCoords] = useState([]);
   const [loading,setLoading] = useState(false);
-  const [restoNumb, setRestoNumb] = useState('blorg');
+  const [restoNumb, setRestoNumb] = useState('');
   const location = useLocation();
   const markerArr = ['go'];
   let  restoPlaces=['eating']; // initialize array
