@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/Button';
 const ReportHeader = () => {
 	const setActive = useOutletContext();
 	return(
-		// <div className="reportBack">
 			<section className="reportIntro col-sm-9 ">
 				<h1 className="reportHeading">Ramen Report
 				</h1>
@@ -27,7 +26,6 @@ const ReportHeader = () => {
 					</div>
 				</div>
 			</section>
-		// </div>
 	)
 }
 

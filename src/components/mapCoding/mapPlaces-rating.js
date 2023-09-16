@@ -5,8 +5,8 @@ import { Loader } from '@googlemaps/js-api-loader';
 import {useLocation} from 'react-router-dom';
 import {DataContext} from '../../App';
 // import { MarkerClusterer } from "@googlemaps/markerclusterer";
-// import {MagnifyingGlass} from "react-loader-spinner";
-import HashLoader from 'react-spinners/HashLoader';
+import PulseLoader from 'react-spinners/PulseLoader';
+
 import Top3Ramen from '../top3Ramen';
 import ratingFetch from '../ratingFetch';
 
@@ -371,9 +371,9 @@ const MyRating = ({restoRatings}) => {
             </div>
               <div id="restoSelectBlock">
                 {loading ?
-                  <HashLoader
+                  <PulseLoader
                     color="#fff"
-                    size={20}
+                    size={10}
                     loading={loading}
                     id="loadProg"
                   />

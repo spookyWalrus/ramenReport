@@ -18,18 +18,25 @@ export default function Ratings() {
   //   console.log('theRatings set: ',theRatings);
     return (
       <div className="ratingBack">
-        <div className="ratingIntro">
+        <section className="ratingIntro">
           <h1 className="ratingHeading">Ramen Ratings
           </h1>
+          <p>Find ramen ratings closest to you, or find ratings for your whole city.
+          </p>
+        </section>
+        <section className="ratingSection">
           <MyRating restoRatings={restoRatings}/>
-          <div class="chart-container">
-            <h3>Best Ramen in your area</h3>
-                {theRatings.length>1 ? 
-                <RamenChart dbratings={theRatings}/> 
-                : <RamenChart />
-                } 
+
+          <div className="ratingBlock">
+            <div class="chart-container">
+                <h3>Best Ramen in your area</h3>
+                    {theRatings.length>1 ? 
+                    <RamenChart dbratings={theRatings}/> 
+                    : <RamenChart />
+                    } 
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     );
   // }else{
