@@ -98,6 +98,16 @@ const MyMap = (mapTitle) => {
               icon: markerIcon,
             });
             marker.setMap(map); //this is a googlemaps api function, not a hook
+            marker.addListener("click",()=>{
+              // console.log('marker click');
+              map.setZoom(16);
+              map.setCenter(marker.getPosition());
+
+              // console.log(marker.title);
+              setRestoMenu(marker.title);
+              // console.log(marker.internalPosition.lat());
+              // console.log(marker.internalPosition.lng());
+            })
             return marker;
         })
           new MarkerClusterer({markers,map});
@@ -186,8 +196,8 @@ const MyMap = (mapTitle) => {
         setRestolist(restoPlaces);
         setRestoMarker(markerArr);
         let total = restoPlaces.length;
-        console.log('total: ',total);
-        setRestoNumb(`Number of results: ${total}`);
+        console.log('resto total: ',total);
+        setRestoNumb('Number of results: '+total);
     }
 
 // ==== check if user has denied geolocation access ====
@@ -259,7 +269,24 @@ const MyMap = (mapTitle) => {
     setCityCoords(userCity);
   })
 
+// ====== match resto list with resto Marker on click
+  function setRestoMenu(title){
+    let menu = document.getElementById('restoSelect');
+    menu.value = title;
+  }
 
+//====== center map to selected resto
+  function setFocusMarker(){
+    let restoVal = document.getElementById('restoSelect').value;
+    // console.log(restoVal);
+    let title = restoMarker.filter((obj,i)=> obj.resto === restoVal);
+    // console.log(title);
+    let restoValPosition = {lat: title[0].lat, lng: title[0].lng}
+
+    map.setCenter(restoValPosition);
+    map.setZoom(17);
+
+  }
 
   // === change title depending report or rating page =====
   let searchTitle, restoComm, listComm, resultsMessage;
@@ -316,11 +343,17 @@ const MyMap = (mapTitle) => {
                         loading={loading}
                         id="loadProg"
                       />
-                    : <div><h6 className="ratingComm">{restoNumb}</h6></div>
+                : <div>
+                    <h6 className="ratingComm">{restoNumb}</h6>
+                  </div>
+
                 }
               </div>
               <div className="selectResto">
-                <select className="select-color form-select form-select-lg mb-3 " aria-label="Default select example">
+                <select id="restoSelect" 
+                  className="select-color form-select form-select-lg mb-3 " 
+                  aria-label="Default select example" 
+                  onChange={()=>{setFocusMarker()}}>
                       {restoList.map((restoNames,i) =>{
                         return <option key={i} value={restoNames} name="resto">{restoNames}
                         </option>
