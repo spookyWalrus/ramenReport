@@ -34,6 +34,12 @@ button{
 /*  display: inline;*/
 /*  margin-top: 5%;*/
 }
+@media only screen and (max-width: 550px){
+  .select-color{
+      width: 90%;
+      margin: 0 2% 5% 5%;
+  }
+}
 .select-color{
   background-color: #fff;
   color: #5720a8;
@@ -61,17 +67,36 @@ button{
   font-size: 16px;
   color: rgb(240, 191, 14);
 }*/
+@media only screen and (max-width: 550px){
+  .restoLocate{
+    margin-top: 5%;
+    display: inline !important;
+  }
+  .restoBlock{
+    margin: 0;
+    padding: 10px;
+    font-size: 1.25rem;
+  }
 
-.restoBlock{
-  margin: 0;
-  padding: 10px;
 }
-
 .restoLocate{
   margin-top: 5%;
   display: inline-flex;
 }
-
+.restoBlock{
+  margin: 0;
+  padding: 10px;
+}
+/*
+.restoLocate{
+  margin-top: 5%;
+  display: inline-flex;
+}*/
+@media only screen and (max-width: 550px){
+  .loadSpinner{
+    margin: 1% 0 4% 0;
+  }
+}
 .loadSpinner{
   display: inline-block;
 }

@@ -291,7 +291,7 @@ const MyMap = (mapTitle) => {
   // === change title depending report or rating page =====
   let searchTitle, restoComm, listComm, resultsMessage;
   if(location.pathname === '/report'){
-    searchTitle = 'Find your restaurant on the list or in the map below';
+    searchTitle = 'Search and find your restaurant, complete rating section below';
     restoComm = 'Within 200m'
     listComm = 'Within 10km of downtown';
   }else{
@@ -309,58 +309,59 @@ const MyMap = (mapTitle) => {
 
   return (
     <>
-      <div className="starBack">
-        <div className="ratingLabel"> 
-            <span>{searchTitle}</span>
-            <div className="restoLocate">
-              <div className="restoBlock">
-                   <button onClick={checkAccess} type="button">Find restaurants nearest to me
-                   </button>
-                   <h6 className="ratingComm">{restoComm}
-                  </h6>
-              </div>
-              <div className="restoBlock">
-                <select onChange={getCity} id="cityPicker">
-                  <option value='none' name='city'>Choose your city</option>
-                  <option value='Montreal' name='city'>Montreal</option>
-                  <option value='Toronto' name='city'>Toronto</option>
-                  <option value='Vancouver' name='city'>Vancouver</option>
-                  <option value='Ottawa' name='city'>Ottawa</option>
-                </select>
-               <button onClick={()=>handleSearch(cityCoords)} type="button">FIND ALL RESTAURANTS
-               </button>
-               <h6 className="ratingComm">{listComm}
+      <div className="menuBlock">
+        <div className="loadRestoBack"> 
+          <h5>{searchTitle}</h5>
+          {/*<h6 className="ratingComm">click to load restaurants</h6>*/}
+          <div className="restoLocate">
+            <div className="restoBlock">
+                 <button onClick={checkAccess} type="button">Search nearest to me
+                 </button>
+                 <h6 className="ratingComm">{restoComm}
                 </h6>
-              </div>
             </div>
-          <div id="restoSelectBlock">
-            {/*<div className="selectResto">*/}
-              <div className="loadSpinner">
-               {loading ?
-                  <PulseLoader
-                        color="#fff"
-                        size={10}
-                        loading={loading}
-                        id="loadProg"
-                      />
-                : <div>
-                    <h6 className="ratingComm">{restoNumb}</h6>
-                  </div>
-
-                }
-              </div>
-              <div className="selectResto">
-                <select id="restoSelect" 
-                  className="select-color form-select form-select-lg mb-3 " 
-                  aria-label="Default select example" 
-                  onChange={()=>{setFocusMarker()}}>
-                      {restoList.map((restoNames,i) =>{
-                        return <option key={i} value={restoNames} name="resto">{restoNames}
-                        </option>
-                      })}
-                </select>
+            <div className="restoBlock">
+              <select onChange={getCity} id="cityPicker">
+                <option value='none' name='city'>Choose your city</option>
+                <option value='Montreal' name='city'>Montreal</option>
+                <option value='Toronto' name='city'>Toronto</option>
+                <option value='Vancouver' name='city'>Vancouver</option>
+                <option value='Ottawa' name='city'>Ottawa</option>
+              </select>
+             <button onClick={()=>handleSearch(cityCoords)} type="button">Search whole city
+             </button>
+             <h6 className="ratingComm">{listComm}
+              </h6>
             </div>
           </div>
+        </div>
+      
+        <div class="selectRestoBlock">
+          <div className="selectResto">
+            <div className="loadSpinner">
+              {loading ?
+                <PulseLoader
+                      color="#fff"
+                      size={10}
+                      loading={loading}
+                      id="loadProg"
+                />
+              : <div>
+                  <h6 className="ratingComm">{restoNumb}</h6>
+                </div>
+              }
+            </div>
+            <select id="restoSelect" 
+              className="select-color form-select form-select-md " 
+              aria-label="Default select example" 
+              onChange={()=>{setFocusMarker()}}>
+                  {restoList.map((restoNames,i) =>{
+                    return <option key={i} value={restoNames} name="resto">{restoNames}
+                    </option>
+                  })}
+            </select>
+          </div>
+          <div id="map" className="starBack">geomap</div>
         </div>
       </div>
     </>

@@ -4,13 +4,29 @@
 	background-position: 0px 92px;
 	background-attachment: fixed;
 	height: 100%;
+	width: 100%;
+	font-size: 1rem;
 }
 
 /*================== Report Header ============*/
+@media only screen and (max-width: 550px){
+	.reportIntro{
+		margin: 15% 5% 10% 5% !important;
+	}
+	.reportIntro > h5{
+		margin: 0 5% 5% 5%;
+		font-size: 1rem;
+		text-align: center;
+	}
+	.reportButtBlock > a > button{
+		width: auto;
+	}
+}
+
 .reportIntro{
 	position: relative;
 	background-color: rgba(246, 232, 111, 0);
-	margin: 11% 15% 0 15%;
+	margin: 11% 15% 0% 15%;
 	justify-content: center;
 	text-align: left;
 	padding-top: 6%;
@@ -20,12 +36,15 @@
 	text-align: center !important;
 }
 
+
 .reportButtBlock{
 	text-align: center;
+	margin: 0;
 }
 .reportButtBlock button{
-	margin: 5%;
+/*	margin: 5%;*/
 }
+
 
 /*================== Report Main Page =============*/
 .reportSection{
@@ -33,7 +52,7 @@
 	position: relative;
 /*	text-align: center;*/
 	justify-content: center;
-	margin: 5% 17% 10% 17%;
+	margin: 5% 5% 10% 5%;
 /*	height: 100%;*/
 /*	color: green;*/
 }
@@ -44,18 +63,54 @@
 
 }
 
-.reportForm{
+.rateSection{
 /*	text-align: center;*/
 	justify-content: center;
-
 }
-/*========== StarRating component ============*/
+/* ======= menuBlock - a mapPlaces component ===== */
+@media only screen and (max-width: 550px){
+	.menuBlock{
+		padding: 5%;
+	}
+}
+
+
+.menuBlock{
+	display: block;
+	flex-wrap: wrap;
+	background-color: #401705;
+	border-radius: 8px;
+	width: auto;
+	height: auto;
+	text-align: center;
+	text-justify: center;
+	color: #c10505;
+	margin-bottom: 3%;
+	padding:2%;
+}
+.rateBlock{
+	display: block;
+	flex-wrap: wrap;
+	background-color: #401705;
+	border-radius: 8px;
+	width: auto;
+	height: auto;
+	text-align: center;
+	text-justify: center;
+	color: #c10505;
+	margin-bottom: 3%;
+	padding:2%;
+}
+/*==== StarRating component - a mapPlaces component =====*/
+@media only screen and (max-width: 550px){
+	.starBack{
+		margin: 1% 1% 3% 1%;
+	}
+}
 .starBack{
 	display: block;
 	flex-wrap: wrap;
-/*	flex-direction: row;*/
-	background-color: #401705;
-/*	border: solid 2px #605f5f;*/
+	background-color: #2b0606;
 	border-radius: 8px;
 	width: auto;
 	height: auto;
@@ -64,7 +119,6 @@
 	padding:2%;
 	color: #c10505;
 	margin: 2%;
-/*	display: block;*/
 }
 .star-rating{
 	display: inline;
@@ -114,11 +168,16 @@
 /*	word-break: break-all;*/
 }
 
-.ratingLabel{
+.loadRestoBack{
 	margin: 3% 3% 0% 3%;
 	font-size: 1.4em;
 	text-align: center;
+	color: #fff;
 }
+.selectRestoBlock{
+	margin-top: 5%;
+}
+
 
 textarea{
 	width: 95%;
@@ -176,3 +235,4 @@ input {
 	background-color: rgba(234,98,98,1);
 	border: #000;
 }*/
+
