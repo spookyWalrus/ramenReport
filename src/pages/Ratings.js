@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import MyRating from '../components/mapCoding/mapPlaces-rating';
-
 import './Ratings.css';
+import './Report.css';
 import '../components/mapCoding/mapApp.css';
 
 import RamenChart from '../components/chart.js';
@@ -18,15 +18,14 @@ export default function Ratings() {
   //   console.log('theRatings set: ',theRatings);
     return (
       <div className="ratingBack">
-        <section className="ratingIntro">
-          <h1 className="ratingHeading">Ramen Ratings
+        <section className="reportIntro">
+          <h1 className="reportHeading">The Ramen Ratings
           </h1>
-          <p>Find ramen ratings closest to you, or find ratings for your whole city.
-          </p>
         </section>
         <section className="ratingSection">
-          <MyRating restoRatings={restoRatings}/>
-
+          <div className="menuBlock">
+            <MyRating restoRatings={restoRatings}/>
+          </div>
           <div className="ratingBlock">
             <div class="chart-container">
                 <h3>Best Ramen in your area</h3>

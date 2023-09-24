@@ -47,12 +47,18 @@
 
 
 /*================== Report Main Page =============*/
+@media only screen and (max-width: 550px){
+	.reportSection{
+		margin: 5% 5% 10% 5%;
+	}
+
+}
 .reportSection{
 /*	display: inline-block;*/
 	position: relative;
 /*	text-align: center;*/
 	justify-content: center;
-	margin: 5% 5% 10% 5%;
+	margin: 11% 15% 10% 15%;
 /*	height: 100%;*/
 /*	color: green;*/
 }
@@ -70,7 +76,7 @@
 /* ======= menuBlock - a mapPlaces component ===== */
 @media only screen and (max-width: 550px){
 	.menuBlock{
-		padding: 5%;
+/*		padding: 2%;*/
 	}
 }
 
@@ -86,7 +92,7 @@
 	text-justify: center;
 	color: #c10505;
 	margin-bottom: 3%;
-	padding:2%;
+	padding: 2%;
 }
 .rateBlock{
 	display: block;
@@ -104,7 +110,9 @@
 /*==== StarRating component - a mapPlaces component =====*/
 @media only screen and (max-width: 550px){
 	.starBack{
-		margin: 1% 1% 3% 1%;
+		margin: 1% 1% 5% 1%;
+		font-size: 1rem;
+
 	}
 }
 .starBack{
@@ -119,6 +127,7 @@
 	padding:2%;
 	color: #c10505;
 	margin: 2%;
+	font-size: 1.25rem;
 }
 .star-rating{
 	display: inline;
@@ -174,8 +183,13 @@
 	text-align: center;
 	color: #fff;
 }
+@media only screen and (max-width: 550px){
+	.selectRestoBlock{
+		margin-top: 5%;
+	}
+}
 .selectRestoBlock{
-	margin-top: 5%;
+	margin-top: 2%;
 }
 
 

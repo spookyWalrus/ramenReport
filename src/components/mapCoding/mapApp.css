@@ -42,8 +42,9 @@ button{
 }
 .select-color{
   background-color: #fff;
-  color: #5720a8;
   border: #fff;
+  width: 50%;
+  margin: 1% auto;
 }
 .select-color:focus{
   box-shadow: 0 0 0 .1rem rgb(240, 191, 14)
@@ -69,7 +70,7 @@ button{
 }*/
 @media only screen and (max-width: 550px){
   .restoLocate{
-    margin-top: 5%;
+/*    margin-top: 5%;*/
     display: inline !important;
   }
   .restoBlock{
@@ -80,7 +81,7 @@ button{
 
 }
 .restoLocate{
-  margin-top: 5%;
+  margin-top: 0%;
   display: inline-flex;
 }
 .restoBlock{

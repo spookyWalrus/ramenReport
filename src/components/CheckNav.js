@@ -66,6 +66,7 @@ export const sendLoginAction = async({ request })=> {
 
     // send your post request via fetch() and verify credentials
     if (login.logReg === "login"){
+       // return fetch('http://localhost:3000/login',
        return fetch('http://localhost:3000/login',
             {
                 method: 'post',
