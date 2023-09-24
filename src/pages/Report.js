@@ -6,7 +6,6 @@ import {DataContext} from '../App';
 // import MapContainer from '../components/mapCoding/mapCode-geo';
 
 import MyMap from '../components/mapCoding/mapPlaces-report.js';
-
 import './Report.css';
 // const StarSet = createContext();
 // import ramenPlaces from '../json/json2DB.js';

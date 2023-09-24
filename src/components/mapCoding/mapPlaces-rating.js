@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect,useContext } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 // import ramenIcon from './ramen.png';
@@ -328,10 +327,10 @@ const MyRating = ({restoRatings}) => {
     listComm = 'If you would rather not give your location data, choose your city and find your restaurant in the list';
   }else{
 
-    searchTitle = 'Find the best ramen';
+    searchTitle = 'Retrieve ratings based on location';
     // restoComm = 'By clicking below, the app will access your location data to give you ramen rankings nearest to you'
-    restoComm= '(locate me)';
-    listComm = '(keep my location private)';
+    restoComm= 'Within 200m';
+    listComm = 'Within 10km of downtown';
   }
 
 
@@ -339,48 +338,46 @@ const MyRating = ({restoRatings}) => {
 
   return (
     <>
-      <div className="starBack">
-        <div className="ratingLabel"> 
-            <span>{searchTitle}</span>
-            <div className="restoLocate">
-              <div className="restoBlock">
-                {/*<h6 className="ratingComm">{restoComm}*/}
-                {/*By clicking below, the app will access your location data to give you a list of restaurants nearest to you*/}
-                {/*</h6>*/}
+      <div className="loadRestoBack"> 
+          <h5>{searchTitle}</h5>
+          <div className="restoLocate">
+            <div className="restoBlock">
+              {/*<h6 className="ratingComm">{restoComm}*/}
+              {/*By clicking below, the app will access your location data to give you a list of restaurants nearest to you*/}
+              {/*</h6>*/}
 
-                   <button onClick={()=>{isCityWide(false)}} type="button">Find the best Ramen closest to me
-                   </button>
-                   <h6 className="ratingComm">{restoComm}</h6>
-              </div>
-              <div className="restoBlock">
-                {/*<h6 className="ratingComm">{listComm}*/}
-                {/*If you would rather not give your location data, choose your city and find your restaurant in the list*/}
-                {/*</h6>*/}
-                <select onChange={getCity}>
-                  <option></option>
-                  <option value='Montreal' name='city'>Montreal</option>
-                  <option value='Toronto' name='city'>Toronto</option>
-                  <option value='Vancouver' name='city'>Vancouver</option>
-                  <option value='Ottawa' name='city'>Ottawa</option>
-                </select>
-
-               <button onClick={()=>{isCityWide(true)}} type="button">FIND THE TOP RAMEN
-               </button>
-               <h6 className="ratingComm">{listComm}</h6>
-              </div>
+                 <button onClick={()=>{isCityWide(false)}} type="button">Find ratings closest to me
+                 </button>
+                 <h6 className="ratingComm">{restoComm}</h6>
             </div>
-              <div id="restoSelectBlock">
-                {loading ?
-                  <PulseLoader
-                    color="#fff"
-                    size={10}
-                    loading={loading}
-                    id="loadProg"
-                  />
-                  : <div></div>
-                }
-              </div>
-        </div>
+            <div className="restoBlock">
+              {/*<h6 className="ratingComm">{listComm}*/}
+              {/*If you would rather not give your location data, choose your city and find your restaurant in the list*/}
+              {/*</h6>*/}
+              <select onChange={getCity}>
+                <option value='none' name='city'>Choose your city</option>
+                <option value='Montreal' name='city'>Montreal</option>
+                <option value='Toronto' name='city'>Toronto</option>
+                <option value='Vancouver' name='city'>Vancouver</option>
+                <option value='Ottawa' name='city'>Ottawa</option>
+              </select>
+
+             <button onClick={()=>{isCityWide(true)}} type="button">Search whole city
+             </button>
+             <h6 className="ratingComm">{listComm}</h6>
+            </div>
+          </div>
+            <div id="restoSelectBlock">
+              {loading ?
+                <PulseLoader
+                  color="#fff"
+                  size={10}
+                  loading={loading}
+                  id="loadProg"
+                />
+                : <div></div>
+              }
+            </div>
       </div>
       {/*<div className="starBack">
         <div> 
