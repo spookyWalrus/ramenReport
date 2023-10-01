@@ -21,6 +21,7 @@ const MyRating = ({restoRatings}) => {
   const [restoList,setRestolist] = useState([]);
   const [restoMarker, setRestoMarker] = useState([]);
   const [cityCoords,setCityCoords] = useState([]);
+  const [searchNumb,setSearchNumb] = useState([]);
 
   const [loading,setLoading] = useState(false);
   const [cityWide,setCityWide] = useState();
@@ -129,7 +130,6 @@ const MyRating = ({restoRatings}) => {
 // ===== google api call to search for restos =====
   function handleSearch(cityCoords) {
     setLoading(true);
-
     let request = {
       location: new window.google.maps.Circle(cityCoords),
       query: 'ramen',
@@ -238,6 +238,9 @@ const MyRating = ({restoRatings}) => {
       let second  = markerArr.shift();
         setRestolist(restoPlaces);
         setRestoMarker(markerArr);
+        let total = restoPlaces.length;
+        console.log('resto total: ',total);
+        setSearchNumb('Number of results: '+total);
         setLoading(false);
     }
 
@@ -302,7 +305,6 @@ const MyRating = ({restoRatings}) => {
         userCity = {radius: 100,lat: 45.5041905839693, lng:-73.57431928743786};
         break;
       case 'Toronto': 
-
         userCity = {radius: 10000,lat: 43.655739842049236, lng: -79.38374061036242};
         break;
       case 'Vancouver':
@@ -315,8 +317,7 @@ const MyRating = ({restoRatings}) => {
         userCity = {radius: 100,lat: 45.5041905839693, lng:-73.57431928743786};//default is Montreal
     }
     setCityCoords(userCity);
-
-    handleSearch();
+    // handleSearch();
   })
 
   // === change title depending report or rating page =====
@@ -339,45 +340,47 @@ const MyRating = ({restoRatings}) => {
   return (
     <>
       <div className="loadRestoBack"> 
-          <h5>{searchTitle}</h5>
-          <div className="restoLocate">
-            <div className="restoBlock">
-              {/*<h6 className="ratingComm">{restoComm}*/}
-              {/*By clicking below, the app will access your location data to give you a list of restaurants nearest to you*/}
-              {/*</h6>*/}
+        <h5>{searchTitle}</h5>
+        <div className="restoLocate">
+          <div className="restoBlock">
+            {/*<h6 className="ratingComm">{restoComm}*/}
+            {/*By clicking below, the app will access your location data to give you a list of restaurants nearest to you*/}
+            {/*</h6>*/}
 
-                 <button onClick={()=>{isCityWide(false)}} type="button">Find ratings closest to me
-                 </button>
-                 <h6 className="ratingComm">{restoComm}</h6>
-            </div>
-            <div className="restoBlock">
-              {/*<h6 className="ratingComm">{listComm}*/}
-              {/*If you would rather not give your location data, choose your city and find your restaurant in the list*/}
-              {/*</h6>*/}
-              <select onChange={getCity}>
-                <option value='none' name='city'>Choose your city</option>
-                <option value='Montreal' name='city'>Montreal</option>
-                <option value='Toronto' name='city'>Toronto</option>
-                <option value='Vancouver' name='city'>Vancouver</option>
-                <option value='Ottawa' name='city'>Ottawa</option>
-              </select>
-
-             <button onClick={()=>{isCityWide(true)}} type="button">Search whole city
-             </button>
-             <h6 className="ratingComm">{listComm}</h6>
-            </div>
+               <button onClick={()=>{isCityWide(false)}} type="button">Find ratings closest to me
+               </button>
+               <h6 className="ratingComm">{restoComm}</h6>
           </div>
-            <div id="restoSelectBlock">
-              {loading ?
-                <PulseLoader
-                  color="#fff"
-                  size={10}
-                  loading={loading}
-                  id="loadProg"
-                />
-                : <div></div>
-              }
-            </div>
+          <div className="restoBlock">
+            {/*<h6 className="ratingComm">{listComm}*/}
+            {/*If you would rather not give your location data, choose your city and find your restaurant in the list*/}
+            {/*</h6>*/}
+            <select onChange={getCity}>
+              <option value='none' name='city'>Choose your city</option>
+              <option value='Montreal' name='city'>Montreal</option>
+              <option value='Toronto' name='city'>Toronto</option>
+              <option value='Vancouver' name='city'>Vancouver</option>
+              <option value='Ottawa' name='city'>Ottawa</option>
+            </select>
+
+           <button onClick={()=>handleSearch(cityCoords)} type="button">Search whole city
+           </button>
+           <h6 className="ratingComm">{listComm}</h6>
+          </div>
+        </div>
+        <div className="loadSpinnerRate">
+          {loading ?
+            <PulseLoader
+              color="#fff"
+              size={10}
+              loading={loading}
+              id="loadProg"
+            />
+            : <div>
+                <h6 className="ratingComm">{searchNumb}</h6>
+              </div>
+          }
+        </div>
       </div>
       {/*<div className="starBack">
         <div> 

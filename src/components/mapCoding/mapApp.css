@@ -101,3 +101,6 @@ button{
 .loadSpinner{
   display: inline-block;
 }
+.loadSpinnerRate{
+  display: block;
+}
