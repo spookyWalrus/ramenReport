@@ -8,11 +8,20 @@ import RamenChart from '../components/chart.js';
 
 
 export default function Ratings() {
-  const [theRatings,setTheRatings] = useState(0);
+  const [theRatings,setTheRatings] = useState([]);
+
   const restoRatings =((ratingsData)=>{
     console.log('got data from MyRating: ',ratingsData);
     setTheRatings(ratingsData);
   })
+  console.log('ratings length: ',theRatings.length);
+
+   let ratingBlock = 'ratingBlock';
+  if(theRatings.length === 0){
+    ratingBlock += ' hideRatingBlock';
+  }else if(theRatings.length > 0){
+    ratingBlock += ' showRatingBlock';
+  }
 
   // if(theRatings){
   //   console.log('theRatings set: ',theRatings);
@@ -26,7 +35,7 @@ export default function Ratings() {
           <div className="menuBlock">
             <MyRating restoRatings={restoRatings}/>
           </div>
-          <div className="ratingBlock">
+          <div className={ratingBlock}>
             <div class="chart-container">
                 <h3>Best Ramen in your area</h3>
                     {theRatings.length>1 ? 

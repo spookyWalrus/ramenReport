@@ -29,12 +29,16 @@
 	margin: 5% 17% 10% 17%;
 }
 
+.hideRatingBlock{
+	display: none;
+}
+.showRatingBlock{
+	display: block;
+}
 .ratingBlock{
 	/*position: relative;
 	justify-content: center;
 	margin: 5% 17% 10% 17%;*/
-
-	display: block;
 	flex-wrap: wrap;
 /*	flex-direction: row;*/
 	background-color: #401705;
