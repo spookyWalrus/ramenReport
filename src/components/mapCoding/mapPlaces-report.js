@@ -335,7 +335,6 @@ const MyMap = (mapTitle) => {
             </div>
           </div>
         </div>
-      
         <div class="selectRestoBlock">
           <div className="selectResto">
             <div className="loadSpinner">
