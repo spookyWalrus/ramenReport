@@ -358,9 +358,9 @@ const MyRating = ({restoRatings}) => {
             <select onChange={getCity}>
               <option value='none' name='city'>Choose your city</option>
               <option value='Montreal' name='city'>Montreal</option>
-              <option value='Toronto' name='city'>Toronto</option>
+             {/* <option value='Toronto' name='city'>Toronto</option>
               <option value='Vancouver' name='city'>Vancouver</option>
-              <option value='Ottawa' name='city'>Ottawa</option>
+              <option value='Ottawa' name='city'>Ottawa</option>*/}
             </select>
 
            <button onClick={()=>handleSearch(cityCoords)} type="button">Search whole city
