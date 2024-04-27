@@ -8,6 +8,7 @@
   display: block;
   width: auto;
   height: 300px; 
+
 }
 
 
@@ -45,6 +46,7 @@ button{
   border: #fff;
   width: 50%;
   margin: 1% auto;
+
 }
 .select-color:focus{
   box-shadow: 0 0 0 .1rem rgb(240, 191, 14)
@@ -84,6 +86,7 @@ button{
   margin-top: 0%;
   display: inline-flex;
 }
+
 .restoBlock{
   margin: 0;
   padding: 10px;
@@ -103,4 +106,5 @@ button{
 }
 .loadSpinnerRate{
   display: block;
+
 }

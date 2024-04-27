@@ -4,8 +4,8 @@ import ReportHeader from './ReportHeader';
 import StarRating from '../components/StarRating';
 import {DataContext} from '../App';
 // import MapContainer from '../components/mapCoding/mapCode-geo';
-
 import MyMap from '../components/mapCoding/mapPlaces-report.js';
+
 import './Report.css';
 // const StarSet = createContext();
 // import ramenPlaces from '../json/json2DB.js';
@@ -95,7 +95,6 @@ export default function Report() {
 				setUserStat(reportdata);
 		}
 	},[reportdata])
-
 
 	// let map = TheMap();
 
