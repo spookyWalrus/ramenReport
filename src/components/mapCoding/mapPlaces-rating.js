@@ -414,16 +414,6 @@ const MyRating = ({ restoRatings }) => {
           )}
         </div>
       </div>
-      {/*<div className="starBack">
-        <div> 
-          <h3>{top3}</h3>
-          <div className="top3Block">
-            <Top3Ramen />
-            <Top3Ramen />
-            <Top3Ramen />
-          </div>
-        </div> 
-      </div>*/}
     </>
   );
 };
