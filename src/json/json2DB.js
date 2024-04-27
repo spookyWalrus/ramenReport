@@ -20,7 +20,6 @@ let places = obj.map((item,i) =>{
 		return place;
 })
 
-
 // console.log(places);
 let remapData = places.map((obj,i) =>{
 	for(let k in obj){
@@ -126,6 +125,7 @@ let data;
 export default function loopData(num){
 	console.log('num is at: ',num);
 	console.log('data is: ',obj);
+
 
 	if(num>0 && num<remapData.length){
    	data = remapData[num];

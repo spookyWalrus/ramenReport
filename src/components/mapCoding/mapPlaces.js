@@ -4,6 +4,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import {useLocation} from 'react-router-dom';
 
 
+
 let YOUR_API_KEY = 'AIzaSyACWpiv3APsVVOtbK_rUE6zg8B2dadq3Fs';
 
 // const ramenIcon = {url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
@@ -63,6 +64,7 @@ const MyMap = (mapTitle) => {
      .then(() => {
       const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
 
+
       setPlacesService(placesService);
       // console.log('setPlacesService: ',placesService);
     })
@@ -73,6 +75,7 @@ const MyMap = (mapTitle) => {
           zoom: 12
         })
       
+
     //     handleSearch();
       // setRestolist([]);
     })
@@ -81,14 +84,17 @@ const MyMap = (mapTitle) => {
 
 // ========== default coordinates ======================
 
+
   let rawPos = {lat: 46.04347772938561,lng:-73.82687055753087 };
   let mtlPos = {lat: 45.5591827, lng: -73.7118733};
 // let circlePos = {radius: 100,lat: 45.5591827, lng: -73.7118733,};// this should be same as user coordinates
 
 // === functions to get user loc / list restos ===============
+
   function handleSearch(userCity) {
     console.log('city is at: ',userCity);
     restoPlaces=['eating'];
+
 
     let request = {
       location: new window.google.maps.Circle(userCity),
@@ -138,6 +144,7 @@ const MyMap = (mapTitle) => {
     }
   }; //end of callback();
 
+
     function getPostal(address){
       let provpost = address.split(',');
       let pos = provpost[2].split(' ');
@@ -168,6 +175,7 @@ const MyMap = (mapTitle) => {
       // })
       // setRestoMarker(markerLL);
     }
+
  
 
   let access;
@@ -282,7 +290,6 @@ const MyMap = (mapTitle) => {
         {/*{console.log('re-render')}*/}
         {/*{console.log(restoList)}*/}
        
-
         <div className="starBack">
             {/*<TheMap />*/}
           <div className="ratingLabel"> 
@@ -322,6 +329,7 @@ const MyMap = (mapTitle) => {
       </>
     );
   }
+
 };
 
 export default MyMap;
