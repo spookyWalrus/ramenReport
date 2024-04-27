@@ -10,7 +10,6 @@ import Top3Ramen from "../top3Ramen";
 import ratingFetch from "../ratingFetch";
 
 let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
-console.log("key: ", YOUR_API_KEY);
 
 // const ramenIcon = {url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
 //       scaledSize: new window.google.maps.Size(25,25)}
