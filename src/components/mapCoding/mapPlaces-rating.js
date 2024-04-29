@@ -6,7 +6,7 @@ import { DataContext } from "../../App";
 // import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import PulseLoader from "react-spinners/PulseLoader";
 
-import Top3Ramen from "../top3Ramen";
+// import Top3Ramen from "../top3Ramen";
 import ratingFetch from "../ratingFetch";
 
 let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
