@@ -27,7 +27,6 @@ import { sendReportAction } from "./components/ReportMath";
 //css
 import "./App.css";
 
-
 const DataContext = createContext({});
 
 const theRouter = createBrowserRouter(
@@ -68,4 +67,3 @@ export default function App() {
 }
 
 export { DataContext };
-

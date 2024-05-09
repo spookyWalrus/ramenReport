@@ -33,9 +33,9 @@ const MyRating = ({ restoRatings }) => {
   let restoPlaces = ["eating"]; // initialize array
 
   // ========== load list of restos based on user location =====
-  useEffect(() => {
-    setBasicMap();
-  }, [cityCoords]);
+  // useEffect(() => {
+  //   setBasicMap();
+  // }, [cityCoords]);
 
   function setBasicMap() {
     // const defPos = {lat: 45.5591827, lng: -73.7118733};
@@ -200,7 +200,7 @@ const MyRating = ({ restoRatings }) => {
   //=== fetch ratings data from server =====
   async function getRatings() {
     let dbdata = await ratingFetch(restoPlaces);
-    // console.log(dbdata);
+    console.log("data fetching: ", dbdata);
     return restoRatings(dbdata);
   }
 
@@ -336,6 +336,7 @@ const MyRating = ({ restoRatings }) => {
         }; //default is Montreal
     }
     setCityCoords(userCity);
+    setBasicMap();
     // handleSearch();
   };
 
@@ -387,8 +388,10 @@ const MyRating = ({ restoRatings }) => {
               <option value="Montreal" name="city">
                 Montreal
               </option>
-              {/* <option value='Toronto' name='city'>Toronto</option>
-              <option value='Vancouver' name='city'>Vancouver</option>
+              <option value="Toronto" name="city">
+                Toronto
+              </option>
+              {/*<option value='Vancouver' name='city'>Vancouver</option>
               <option value='Ottawa' name='city'>Ottawa</option>*/}
             </select>
 
