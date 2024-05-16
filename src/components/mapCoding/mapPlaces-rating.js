@@ -13,13 +13,15 @@ let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
 // const ramenIcon = {url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
 //       scaledSize: new window.google.maps.Size(25,25)}
 
-const MyRating = ({ restoRatings }) => {
+const FindRating = ({ restoRatings }) => {
   const [map, setTheMap] = useState(null);
   const [placesService, setPlacesService] = useState(null);
   const [restoList, setRestolist] = useState([]);
   const [restoMarker, setRestoMarker] = useState([]);
   const [cityCoords, setCityCoords] = useState([]);
   const [searchNumb, setSearchNumb] = useState([]);
+
+  const [restoRanking, setRestoRanking] = useState([""]);
 
   const [loading, setLoading] = useState(false);
   const [cityWide, setCityWide] = useState();
@@ -50,19 +52,17 @@ const MyRating = ({ restoRatings }) => {
         const placesService = new window.google.maps.places.PlacesService(
           document.createElement("div")
         );
-
         setPlacesService(placesService);
       })
       .then(() => {
-        let defPos;
-        if (cityCoords.length === 0) {
-          // default values if cityCoords is empty
-          defPos = { lat: 45.5591827, lng: -73.7118733 };
-        } else {
-          defPos = { lat: cityCoords.lat, lng: cityCoords.lng };
-        }
+        // let defPos;
+        // if (cityCoords.length === 0) {
+        //   // default values if cityCoords is empty
+        //   defPos = { lat: 45.5591827, lng: -73.7118733 };
+        // } else {
+        //   defPos = { lat: cityCoords.lat, lng: cityCoords.lng };
+        // }
         // console.log('city is at: ',defPos);
-
         // if(window.google){
         //   console.log('window google is loaded');
         // }
@@ -71,7 +71,6 @@ const MyRating = ({ restoRatings }) => {
         //   zoom: 12
         // })
         // setTheMap(mappy);
-
         // let marker = new window.google.maps.Marker({
         //     position: defPos,
         //     map: map,
@@ -79,7 +78,6 @@ const MyRating = ({ restoRatings }) => {
         //     // icon: 'pin.png'
         // });
         // marker.setMap(mappy);
-
         // refresh = new window.google.maps.event.trigger(map, 'resize');
       })
       .then(() => {
@@ -120,7 +118,7 @@ const MyRating = ({ restoRatings }) => {
 
   //=== trigger functions based on citywide or nearby search
   useEffect(() => {
-    // let refresh = window.google.maps.event.trigger(map, 'resize');
+    // let refresh = window.google.maps.event.trigger(map, "resize");
     if (cityWide) {
       handleSearch(cityCoords);
     } else if (cityWide == false) {
@@ -138,74 +136,45 @@ const MyRating = ({ restoRatings }) => {
     placesService.textSearch(request, callback);
   } // end of handleSearch()
 
-  // === callback function when api call succesfull ====
+  // === callback function when maps api call succesfull ====
   function callback(results, status, pagination) {
     if (status === "OK") {
-      console.log(cityWide);
       let searchResult = results;
       if (!cityWide) {
-        // check if nearby or citywide search
         searchResult = results.slice(0, 10); // the first 10 restos for closest to user.  Otherwise all restos
       }
-      parseRestos(searchResult);
+      getClosestRatings(results);
     }
 
-    if (pagination.hasNextPage && cityWide) {
-      // get next page of results, re-run callback
-      pagination.nextPage();
-    } else {
-      // if no more data, set hooks and re-load page
-      setHooks();
-      restoPlaces.push(userStat);
-      getRatings();
-    }
-    console.log("end of callback");
+    // if (pagination.hasNextPage && cityWide) {
+    // get next page of results, re-run callback
+    // pagination.nextPage();
+    // } else {
+    // if no more data, set hooks and re-load page
+    // setHooks();
+    // restoPlaces.push(userStat);
+    // getRatings();
+    // }
   }
+  // ======  get,set ratings from google maps and db, sort ====
+  async function getClosestRatings(mapRestos) {
+    let ratings = [];
+    await ratingFetch(restoPlaces).then((data) => {
+      ratings[0] = data;
+    });
 
-  //=====  parse data returned from googlemaps api and set to array
-  function parseRestos(searchResult) {
-    for (let x of searchResult) {
-      // populate list of restos
-      // if(x.name === 'KINTON RAMEN'){ // check for doubles
-      //   let addr = 'KINTON RAMEN - '+ ramenAddy(x.formatted_address);
-      //   if(!restoPlaces.includes(addr)){
-      //       restoPlaces.push(addr);
-      //     }
-      // }else if(x.name === 'Kumamoto Ramen'){// check for doubles
-      //   let addr = 'Kumamoto Ramen - '+ ramenAddy(x.formatted_address);
-      //    if(!restoPlaces.includes(addr)){
-      //       restoPlaces.push(addr);
-      //     }
-      // }else{
-      //   if(!restoPlaces.includes(x.name)){
-      //       restoPlaces.push(x.name);
-      //   }
-      // }
-      if (!restoPlaces.includes(x.name)) {
-        restoPlaces.push(x.name);
-      }
-      // makeMarker(x);
-    }
-  } //end of callback();
-
-  // if (pagination.hasNextPage && cityWide) {// get next page of results, re-run callback
-  //     pagination.nextPage();
-  // }else{ // if no more data, set hooks and re-load page
-  //   setHooks();
-  // }
-  //call fetch function to get ratings
-  // }
-  // }; //end of callback();
-
-  //=== fetch ratings data from server =====
-  async function getRatings() {
-    let dbdata = await ratingFetch(restoPlaces);
-    console.log("data fetching: ", dbdata);
-    return restoRatings(dbdata);
+    const sortMapRestos = mapRestos.map((item, x) => {
+      let resto = item.name;
+      let rating = item.rating;
+      return { [resto]: rating };
+    });
+    let mapRankings = sortMapRestos.sort(function (a, b) {
+      return Object.values(b) - Object.values(a);
+    });
+    ratings[1] = mapRankings;
+    setLoading(false);
+    restoRatings(ratings);
   }
-
-  // ==== map returned DB data into descending order ====
-  function makeRanking() {}
 
   //==== parse data to isolate postal code ====
   function getPostal(address) {
@@ -298,7 +267,6 @@ const MyRating = ({ restoRatings }) => {
   const getCity = (selection) => {
     let city = selection.target.value;
     let userCity;
-    console.log("city is: ", city);
     switch (city) {
       case "Montreal":
         userCity = {
@@ -337,7 +305,6 @@ const MyRating = ({ restoRatings }) => {
     }
     setCityCoords(userCity);
     setBasicMap();
-    // handleSearch();
   };
 
   // === change title depending report or rating page =====
@@ -420,4 +387,4 @@ const MyRating = ({ restoRatings }) => {
   );
 };
 
-export default MyRating;
+export default FindRating;
