@@ -29,6 +29,8 @@ export default function Report() {
   let noodleCom, soupCom, toppCom, expCom;
   let total = noodleRate + soupRate + toppRate + expRate;
 
+  console.log("data context: ", contextProps);
+
   if (noodleRate === 0) {
     noodleCom = " ";
   } else if (noodleRate === 1) {

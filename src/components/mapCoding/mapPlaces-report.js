@@ -3,7 +3,6 @@ import { Loader } from "@googlemaps/js-api-loader";
 import ramenIcon from "./ramen.png";
 import { useLocation } from "react-router-dom";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-// import {MagnifyingGlass} from "react-loader-spinner";
 import PulseLoader from "react-spinners/PulseLoader";
 // import restoFile from '../../json/restoFile.json';
 // import loopData from '../../json/json2DB.js';
@@ -105,7 +104,7 @@ const MyMap = (mapTitle) => {
           map.setZoom(16);
           map.setCenter(marker.getPosition());
 
-          // console.log(marker.title);
+          // console.log('marker got clicked, set as: ',marker.title);
           setRestoMenu(marker.title);
           // console.log(marker.internalPosition.lat());
           // console.log(marker.internalPosition.lng());
@@ -154,6 +153,8 @@ const MyMap = (mapTitle) => {
       console.log("isCLose? ", isClose);
       for (let x of results) {
         // populate list of restos
+        // console.log("resto api results resto: ", x.name);
+        // console.log("resto api results, address: ", x.formatted_address);
         let resultRestos = {
           name: x.name,
         };
@@ -305,9 +306,8 @@ const MyMap = (mapTitle) => {
   //====== center map to selected resto
   function setFocusMarker() {
     let restoVal = document.getElementById("restoSelect").value;
-    // console.log(restoVal);
+    // console.log("resto selected: ", restoVal);
     let title = restoMarker.filter((obj, i) => obj.resto === restoVal);
-    // console.log(title);
     let restoValPosition = { lat: title[0].lat, lng: title[0].lng };
 
     map.setCenter(restoValPosition);

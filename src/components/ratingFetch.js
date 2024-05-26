@@ -1,5 +1,5 @@
-function ratingFetch(data) {
-  // console.log(data[data.length-1]);
+function ratingFetch(city) {
+  console.log("search city ratings:  ", city);
 
   // ==== making up credentials to avoid logging in for dev testing ====
   // let user;
@@ -18,6 +18,8 @@ function ratingFetch(data) {
   // } else {
   //   user = data[data.length - 1];
   // }
+  let data = [];
+  data[0] = city;
   data[1] = user;
   // === get ratings data ====
   return fetch(

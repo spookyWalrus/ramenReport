@@ -1,27 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Loader } from "@googlemaps/js-api-loader";
+import { useState, useEffect, useContext } from "react";
+// import { Loader } from "@googlemaps/js-api-loader";
 // import ramenIcon from './ramen.png';
 import { useLocation } from "react-router-dom";
 import { DataContext } from "../../App";
-// import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import PulseLoader from "react-spinners/PulseLoader";
 
 import ratingFetch from "../ratingFetch";
+import { menuLabels, getRatings } from "./mappingTools";
 
-let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
-
-// const ramenIcon = {url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
-//       scaledSize: new window.google.maps.Size(25,25)}
+// let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
 
 const FindRating = ({ restoRatings }) => {
-  const [map, setTheMap] = useState(null);
-  const [placesService, setPlacesService] = useState(null);
-  const [restoList, setRestolist] = useState([]);
-  const [restoMarker, setRestoMarker] = useState([]);
+  // const [placesService, setPlacesService] = useState(null);
+
   const [cityCoords, setCityCoords] = useState([]);
   const [searchNumb, setSearchNumb] = useState([]);
-
-  const [restoRanking, setRestoRanking] = useState([""]);
 
   const [loading, setLoading] = useState(false);
   const [cityWide, setCityWide] = useState();
@@ -34,91 +27,8 @@ const FindRating = ({ restoRatings }) => {
   let markerArr = ["go"];
   let restoPlaces = ["eating"]; // initialize array
 
-  // ========== load list of restos based on user location =====
-  // useEffect(() => {
-  //   setBasicMap();
-  // }, [cityCoords]);
-
-  function setBasicMap() {
-    // const defPos = {lat: 45.5591827, lng: -73.7118733};
-    // get position of user
-    const loader = new Loader({
-      apiKey: YOUR_API_KEY,
-      libraries: ["places", "marker"],
-    });
-    loader
-      .load()
-      .then(() => {
-        const placesService = new window.google.maps.places.PlacesService(
-          document.createElement("div")
-        );
-        setPlacesService(placesService);
-      })
-      .then(() => {
-        // let defPos;
-        // if (cityCoords.length === 0) {
-        //   // default values if cityCoords is empty
-        //   defPos = { lat: 45.5591827, lng: -73.7118733 };
-        // } else {
-        //   defPos = { lat: cityCoords.lat, lng: cityCoords.lng };
-        // }
-        // console.log('city is at: ',defPos);
-        // if(window.google){
-        //   console.log('window google is loaded');
-        // }
-        // let mappy = new window.google.maps.Map(document.getElementById('ratingMap'), {
-        //   center: defPos,
-        //   zoom: 12
-        // })
-        // setTheMap(mappy);
-        // let marker = new window.google.maps.Marker({
-        //     position: defPos,
-        //     map: map,
-        //     title: 'you are here',
-        //     // icon: 'pin.png'
-        // });
-        // marker.setMap(mappy);
-        // refresh = new window.google.maps.event.trigger(map, 'resize');
-      })
-      .then(() => {
-        // window.google.maps.event.trigger(map,'idle');
-      });
-    // },[cityCoords]);
-  }
-
-  // ========= load markers on to map =======
-  // useEffect(()=>{
-  // for(let x = 0;x<restoMarker.length;x++){
-  // const markers = restoMarker.map((info,i)=>{
-  //     let lat = info.lat;
-  //     let lng = info.lng;
-  //     let resto = info.resto;
-
-  // const markerIcon = {
-  // url: ramenIcon,
-  //   url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
-  //   scaledSize: new window.google.maps.Size(35,35),
-  // };
-
-  // let marker =  new window.google.maps.Marker(
-  // {  position: {lat:lat,lng:lng},
-  //     { position:{lat:info.lat,lng:info.lng},
-  //       map: map,
-  //       title: resto,
-  //       icon: markerIcon,
-  //     });
-  //     marker.setMap(map);
-  //     return marker;
-  // })
-  // new MarkerClusterer({markers,map});
-  // marker.setMap(map);
-  // }
-  //       setLoading(false);
-  // },[restoMarker])
-
   //=== trigger functions based on citywide or nearby search
   useEffect(() => {
-    // let refresh = window.google.maps.event.trigger(map, "resize");
     if (cityWide) {
       handleSearch(cityCoords);
     } else if (cityWide == false) {
@@ -126,44 +36,16 @@ const FindRating = ({ restoRatings }) => {
     }
   }, [cityWide]);
 
-  // ===== google api call to search for restos =====
-  function handleSearch(cityCoords) {
+  // ========== get ratings based on cityCoords ==========
+  async function handleSearch(cityCoords) {
     setLoading(true);
-    let request = {
-      location: new window.google.maps.Circle(cityCoords),
-      query: "ramen",
-    };
-    placesService.textSearch(request, callback);
-  } // end of handleSearch()
-
-  // === callback function when maps api call succesfull ====
-  function callback(results, status, pagination) {
-    if (status === "OK") {
-      let searchResult = results;
-      if (!cityWide) {
-        searchResult = results.slice(0, 10); // the first 10 restos for closest to user.  Otherwise all restos
-      }
-      getClosestRatings(results);
-    }
-
-    // if (pagination.hasNextPage && cityWide) {
-    // get next page of results, re-run callback
-    // pagination.nextPage();
-    // } else {
-    // if no more data, set hooks and re-load page
-    // setHooks();
-    // restoPlaces.push(userStat);
-    // getRatings();
-    // }
-  }
-  // ======  get,set ratings from google maps and db, sort ====
-  async function getClosestRatings(mapRestos) {
+    let mapRatings = await getRatings(cityCoords);
     let ratings = [];
-    await ratingFetch(restoPlaces).then((data) => {
-      ratings[0] = data;
+    await ratingFetch(cityCoords.city).then((dbData) => {
+      ratings[0] = dbData;
     });
 
-    const sortMapRestos = mapRestos.map((item, x) => {
+    const sortMapRestos = mapRatings.map((item, x) => {
       let resto = item.name;
       let rating = item.rating;
       return { [resto]: rating };
@@ -173,44 +55,7 @@ const FindRating = ({ restoRatings }) => {
     });
     ratings[1] = mapRankings;
     setLoading(false);
-    restoRatings(ratings);
-  }
-
-  //==== parse data to isolate postal code ====
-  function getPostal(address) {
-    let provpost = address.split(",");
-    let pos = provpost[2].split(" ");
-    let postal = pos[2] + " " + pos[3];
-    return postal;
-  }
-  //=== parse data to isolate address ====
-  function ramenAddy(address) {
-    let addy = address.split(",");
-    let street = addy[0];
-    // console.log(street);
-    let road = street.replace(/[0-9]/g, "").trim();
-    return road;
-  }
-
-  //==== set coordiantes for resto markers =====
-  function makeMarker(restoDetails) {
-    let restObj = {};
-    restObj.lat = restoDetails.geometry.location.lat();
-    restObj.lng = restoDetails.geometry.location.lng();
-    restObj.resto = restoDetails.name;
-    markerArr.push(restObj);
-  }
-
-  // ====== put resto data into Hooks, re-load page ====
-  function setHooks() {
-    let first = restoPlaces.shift();
-    let second = markerArr.shift();
-    setRestolist(restoPlaces);
-    setRestoMarker(markerArr);
-    let total = restoPlaces.length;
-    console.log("resto total: ", total);
-    setSearchNumb("Number of results: " + total);
-    setLoading(false);
+    restoRatings(ratings); // this array gets pushed up to parent component
   }
 
   // ==== check if user has denied geolocation access ====
@@ -230,7 +75,7 @@ const FindRating = ({ restoRatings }) => {
   function isCityWide(torf) {
     if (torf && signedIn) {
       setCityWide(true);
-      getCity();
+      setCity();
     } else if (!torf && signedIn) {
       setCityWide(false);
       checkAccess();
@@ -264,7 +109,7 @@ const FindRating = ({ restoRatings }) => {
   }
 
   // ======= city coordinates + radius search to populate resto menu ==========
-  const getCity = (selection) => {
+  const setCity = (selection) => {
     let city = selection.target.value;
     let userCity;
     switch (city) {
@@ -273,6 +118,7 @@ const FindRating = ({ restoRatings }) => {
           radius: 100,
           lat: 45.5041905839693,
           lng: -73.57431928743786,
+          city: city,
         };
         break;
       case "Toronto":
@@ -280,6 +126,7 @@ const FindRating = ({ restoRatings }) => {
           radius: 10000,
           lat: 43.655739842049236,
           lng: -79.38374061036242,
+          city: city,
         };
         break;
       case "Vancouver":
@@ -287,6 +134,7 @@ const FindRating = ({ restoRatings }) => {
           radius: 100,
           lat: 49.280956827935505,
           lng: -123.12243738369997,
+          city: city,
         };
         break;
       case "Ottawa":
@@ -294,6 +142,7 @@ const FindRating = ({ restoRatings }) => {
           radius: 100,
           lat: 45.41982910818854,
           lng: -75.70019586916331,
+          city: city,
         };
         break;
       default:
@@ -301,39 +150,22 @@ const FindRating = ({ restoRatings }) => {
           radius: 100,
           lat: 45.5041905839693,
           lng: -73.57431928743786,
+          city: city,
         }; //default is Montreal
     }
     setCityCoords(userCity);
-    setBasicMap();
+    // getMapServices();
   };
 
-  // === change title depending report or rating page =====
-  let searchTitle, restoComm, listComm;
-  if (location.pathname === "/report") {
-    searchTitle = "Select your restaurant";
-    restoComm =
-      "By clicking below, the app will access your location data to give you a list of restaurants nearest to you";
-    listComm =
-      "If you would rather not give your location data, choose your city and find your restaurant in the list";
-  } else {
-    searchTitle = "Retrieve ratings based on location";
-    // restoComm = 'By clicking below, the app will access your location data to give you ramen rankings nearest to you'
-    restoComm = "Within 200m";
-    listComm = "Within 10km of downtown";
-  }
-
-  let top3 = "The top 3 ramen rankings closest to you";
+  // // === change menu labels depending on page =====
+  const theLabels = menuLabels(location.pathname);
 
   return (
     <>
       <div className="loadRestoBack">
-        <h5>{searchTitle}</h5>
+        <h5>{theLabels.search}</h5>
         <div className="restoLocate">
           <div className="restoBlock">
-            {/*<h6 className="ratingComm">{restoComm}*/}
-            {/*By clicking below, the app will access your location data to give you a list of restaurants nearest to you*/}
-            {/*</h6>*/}
-
             <button
               onClick={() => {
                 isCityWide(false);
@@ -342,13 +174,10 @@ const FindRating = ({ restoRatings }) => {
             >
               Find ratings closest to me
             </button>
-            <h6 className="ratingComm">{restoComm}</h6>
+            <h6 className="ratingComm">{theLabels.resto}</h6>
           </div>
           <div className="restoBlock">
-            {/*<h6 className="ratingComm">{listComm}*/}
-            {/*If you would rather not give your location data, choose your city and find your restaurant in the list*/}
-            {/*</h6>*/}
-            <select onChange={getCity}>
+            <select onChange={setCity}>
               <option value="none" name="city">
                 Choose your city
               </option>
@@ -365,7 +194,7 @@ const FindRating = ({ restoRatings }) => {
             <button onClick={() => handleSearch(cityCoords)} type="button">
               Search whole city
             </button>
-            <h6 className="ratingComm">{listComm}</h6>
+            <h6 className="ratingComm">{theLabels.list}</h6>
           </div>
         </div>
         <div className="loadSpinnerRate">
