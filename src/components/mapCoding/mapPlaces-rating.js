@@ -1,160 +1,77 @@
 import { useState, useEffect, useContext } from "react";
-// import { Loader } from "@googlemaps/js-api-loader";
-// import ramenIcon from './ramen.png';
 import { useLocation } from "react-router-dom";
 import { DataContext } from "../../App";
 import PulseLoader from "react-spinners/PulseLoader";
-
 import ratingFetch from "../ratingFetch";
-import { menuLabels, getRatings } from "./mappingTools";
-
-// let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
+import {
+  menuLabels,
+  getRatings,
+  whichCity,
+  checkCityWide,
+  checkAccess,
+} from "./mappingTools";
 
 const FindRating = ({ restoRatings }) => {
-  // const [placesService, setPlacesService] = useState(null);
-
   const [cityCoords, setCityCoords] = useState([]);
   const [searchNumb, setSearchNumb] = useState([]);
-
   const [loading, setLoading] = useState(false);
-  const [cityWide, setCityWide] = useState();
   const location = useLocation();
-  const { contextProps } = useContext(DataContext);
+  // const { contextProps } = useContext(DataContext);
   // const{signedIn, setSignedIn} = contextProps.signed;
-  let signedIn = true;
-  const { userStat } = contextProps.user;
+  // let signedIn = true;
+  // const { userStat } = contextProps.user;
 
-  let markerArr = ["go"];
-  let restoPlaces = ["eating"]; // initialize array
-
-  //=== trigger functions based on citywide or nearby search
-  useEffect(() => {
-    if (cityWide) {
-      handleSearch(cityCoords);
-    } else if (cityWide == false) {
-      checkAccess();
-    }
-  }, [cityWide]);
+  // let markerArr = ["go"];
+  // let restoPlaces = ["eating"]; // initialize array
 
   // ========== get ratings based on cityCoords ==========
   async function handleSearch(cityCoords) {
     setLoading(true);
-    let mapRatings = await getRatings(cityCoords);
+    let mapRatings = await getRatings(cityCoords)
+      .then()
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
     let ratings = [];
-    await ratingFetch(cityCoords.city).then((dbData) => {
-      ratings[0] = dbData;
-    });
+
+    await ratingFetch(cityCoords.city)
+      .then((dbData) => {
+        ratings[0] = dbData;
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
 
     const sortMapRestos = mapRatings.map((item, x) => {
       let resto = item.name;
       let rating = item.rating;
       return { [resto]: rating };
     });
+
     let mapRankings = sortMapRestos.sort(function (a, b) {
       return Object.values(b) - Object.values(a);
     });
+
     ratings[1] = mapRankings;
     setLoading(false);
     restoRatings(ratings); // this array gets pushed up to parent component
   }
 
-  // ==== check if user has denied geolocation access ====
-  let access;
-  function checkAccess() {
-    console.log(access);
-    if (access === "denied") {
-      alert(
-        "You already denied location access. Refresh page and click again to accept location access."
-      );
-    } else {
-      getUser();
-    }
-  }
-
   // =========== check if cityWide or nearby search + check if user is logged in   ====
-  function isCityWide(torf) {
-    if (torf && signedIn) {
-      setCityWide(true);
-      setCity();
-    } else if (!torf && signedIn) {
-      setCityWide(false);
-      checkAccess();
-    } else {
-      alert("Please log in to get ratings");
-    }
+  async function isCityWide() {
+    await checkCityWide().then((coordinates) => {
+      if (coordinates && !null) {
+        handleSearch(coordinates);
+      }
+    });
   }
 
-  //======  get geolocation of user =======
-  function getUser() {
-    new Promise(function (resolve, reject) {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    })
-      .then((response) => {
-        let geoloc = {
-          lat: response.coords.latitude,
-          lng: response.coords.longitude,
-        };
-
-        return geoloc;
-      })
-      .then((geoloc) => {
-        let circlePos = { radius: 500, lat: geoloc.lat, lng: geoloc.lng };
-        setCityWide(false);
-        handleSearch(circlePos);
-      })
-      .catch((error) => {
-        access = "denied";
-        console.log("my custom denied");
-      });
-  }
-
-  // ======= city coordinates + radius search to populate resto menu ==========
+  // ======= set city coordinates + radius of search  ==========
   const setCity = (selection) => {
-    let city = selection.target.value;
-    let userCity;
-    switch (city) {
-      case "Montreal":
-        userCity = {
-          radius: 100,
-          lat: 45.5041905839693,
-          lng: -73.57431928743786,
-          city: city,
-        };
-        break;
-      case "Toronto":
-        userCity = {
-          radius: 10000,
-          lat: 43.655739842049236,
-          lng: -79.38374061036242,
-          city: city,
-        };
-        break;
-      case "Vancouver":
-        userCity = {
-          radius: 100,
-          lat: 49.280956827935505,
-          lng: -123.12243738369997,
-          city: city,
-        };
-        break;
-      case "Ottawa":
-        userCity = {
-          radius: 100,
-          lat: 45.41982910818854,
-          lng: -75.70019586916331,
-          city: city,
-        };
-        break;
-      default:
-        userCity = {
-          radius: 100,
-          lat: 45.5041905839693,
-          lng: -73.57431928743786,
-          city: city,
-        }; //default is Montreal
-    }
-    setCityCoords(userCity);
-    // getMapServices();
+    let selectedCity = whichCity(selection);
+    setCityCoords(selectedCity);
   };
 
   // // === change menu labels depending on page =====
@@ -168,7 +85,7 @@ const FindRating = ({ restoRatings }) => {
           <div className="restoBlock">
             <button
               onClick={() => {
-                isCityWide(false);
+                isCityWide();
               }}
               type="button"
             >
