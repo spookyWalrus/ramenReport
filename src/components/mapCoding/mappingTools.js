@@ -1,7 +1,9 @@
-// import {useContext } from "react";
+// import { useContext } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 // const { contextProps } = useContext(DataContext);
-// const{signedIn, setSignedIn} = contextProps.signed;
+// const { signedIn, setSignedIn } = contextProps.signed;
+
+// let signedIn = true;
 
 let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
 
@@ -37,14 +39,36 @@ export async function getRatings(cityCoords) {
   });
 }
 
+// ====== reverse geocoding based on lng/lat coordinates
+async function revGeoCoder(coordinates) {
+  const latlng = {
+    lat: parseFloat(coordinates.lat),
+    lng: parseFloat(coordinates.lng),
+  };
+
+  const geocoder = new window.google.maps.Geocoder();
+  return new Promise((resolve, reject) => {
+    geocoder.geocode({ location: latlng }, (results, status) => {
+      if (status === "OK") {
+        const address = results[0].address_components[2].long_name;
+        console.log("user location as city: ", address);
+        resolve(address);
+      } else {
+        console.log("rev geocoding failed: ", status);
+        reject(status);
+      }
+    });
+  });
+}
+
 // =========== check if cityWide or nearby search + check if user is logged in   ====
-let signedIn = true;
-export async function checkCityWide() {
+export async function checkCityWide(signedIn) {
+  console.log("signedIn? ", signedIn);
   if (signedIn) {
     if (checkAccess()) {
       try {
-        let userPosition = await getUser();
-        return userPosition;
+        let userDetails = await getUser();
+        return userDetails;
       } catch (error) {
         console.log(error);
       }
@@ -74,10 +98,17 @@ function checkAccess() {
 
 //======  get geolocation of user =======
 async function getUser() {
+  let userPosition = {};
   return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+    navigator.geolocation.getCurrentPosition(resolve, reject, options);
   })
     .then((response) => {
+      console.log("response is: ", response);
       let geoloc = {
         lat: response.coords.latitude,
         lng: response.coords.longitude,
@@ -85,10 +116,17 @@ async function getUser() {
       return geoloc;
     })
     .then((geoloc) => {
-      let circlePos = { radius: 500, lat: geoloc.lat, lng: geoloc.lng };
-      return circlePos;
+      userPosition = { radius: 500, lat: geoloc.lat, lng: geoloc.lng };
+      return userPosition;
+    })
+    .then(async (circlePos) => {
+      let userCity = await revGeoCoder(circlePos);
+      console.log("userCity is: ", userCity);
+      userPosition.city = userCity;
+      return userPosition;
     })
     .catch((error) => {
+      console.log("error is: ", error);
       if (error.code === error.PERMISSION_DENIED) {
         access = "denied";
         console.log("denied getting user position");
@@ -103,8 +141,11 @@ async function getUser() {
 // ======= city coordinates + radius search to populate resto menu ==========
 let userCity;
 export function whichCity(selection) {
-  let city = selection.target.value;
-  // let userCity;
+  let city = selection;
+  if (selection) {
+    city = selection.target.value;
+  }
+
   switch (city) {
     case "Montreal":
       userCity = {
@@ -146,6 +187,7 @@ export function whichCity(selection) {
         city: city,
       }; //default is Montreal
   }
+  console.log("city is: ", city);
   return userCity;
 }
 

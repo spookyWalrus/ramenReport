@@ -16,32 +16,26 @@ const FindRating = ({ restoRatings }) => {
   const [searchNumb, setSearchNumb] = useState([]);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
-  // const { contextProps } = useContext(DataContext);
-  // const{signedIn, setSignedIn} = contextProps.signed;
-  // let signedIn = true;
-  // const { userStat } = contextProps.user;
+  const { contextProps } = useContext(DataContext);
 
-  // let markerArr = ["go"];
-  // let restoPlaces = ["eating"]; // initialize array
+  const { signedIn } = contextProps.signed;
 
   // ========== get ratings based on cityCoords ==========
   async function handleSearch(cityCoords) {
     setLoading(true);
-    let mapRatings = await getRatings(cityCoords)
+    let mapRatings = await getRatings(cityCoords) //googlemaps ratings
       .then()
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
     let ratings = [];
 
-    await ratingFetch(cityCoords.city)
+    await ratingFetch(cityCoords.city) // DB ratings
       .then((dbData) => {
         ratings[0] = dbData;
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
 
     const sortMapRestos = mapRatings.map((item, x) => {
@@ -61,9 +55,10 @@ const FindRating = ({ restoRatings }) => {
 
   // =========== check if cityWide or nearby search + check if user is logged in   ====
   async function isCityWide() {
-    await checkCityWide().then((coordinates) => {
-      if (coordinates && !null) {
-        handleSearch(coordinates);
+    await checkCityWide(signedIn).then((userLocation) => {
+      if (userLocation && !null) {
+        // setCity(userLocation[1]);
+        handleSearch(userLocation);
       }
     });
   }
