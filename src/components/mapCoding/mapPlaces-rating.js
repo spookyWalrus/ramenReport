@@ -9,25 +9,24 @@ import {
   whichCity,
   checkCityWide,
   checkAccess,
+  setMapServices,
 } from "./mappingTools";
 
 const FindRating = ({ restoRatings }) => {
   const [cityCoords, setCityCoords] = useState([]);
   const [searchNumb, setSearchNumb] = useState([]);
+  const [ratings, setRatings] = useState([]);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const { contextProps } = useContext(DataContext);
 
   const { signedIn } = contextProps.signed;
 
+  console.log("context: ", contextProps);
+
   // ========== get ratings based on cityCoords ==========
   async function handleSearch(cityCoords) {
     setLoading(true);
-    let mapRatings = await getRatings(cityCoords) //googlemaps ratings
-      .then()
-      .catch((error) => {
-        console.log(error);
-      });
     let ratings = [];
 
     await ratingFetch(cityCoords.city) // DB ratings
@@ -38,28 +37,36 @@ const FindRating = ({ restoRatings }) => {
         console.log(error);
       });
 
-    const sortMapRestos = mapRatings.map((item, x) => {
-      let resto = item.name;
-      let rating = item.rating;
-      return { [resto]: rating };
-    });
+    await getRatings(cityCoords) //googlemaps ratings
+      .then((mapRatings) => {
+        const sortMapRestos = mapRatings.map((item, x) => {
+          let resto = item.name;
+          let rating = item.rating;
+          return { [resto]: rating };
+        });
+        let mapRankings = sortMapRestos.sort(function (a, b) {
+          return Object.values(b) - Object.values(a);
+        });
 
-    let mapRankings = sortMapRestos.sort(function (a, b) {
-      return Object.values(b) - Object.values(a);
-    });
+        ratings[1] = mapRankings;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    ratings[1] = mapRankings;
     setLoading(false);
     restoRatings(ratings); // this array gets pushed up to parent component
   }
 
   // =========== check if cityWide or nearby search + check if user is logged in   ====
   async function isCityWide() {
-    await checkCityWide(signedIn).then((userLocation) => {
-      if (userLocation && !null) {
-        // setCity(userLocation[1]);
-        handleSearch(userLocation);
-      }
+    await setMapServices().then(async () => {
+      await checkCityWide(signedIn).then((userLocation) => {
+        if (userLocation && !null) {
+          // setCity(userLocation[1]);
+          handleSearch(userLocation);
+        }
+      });
     });
   }
 

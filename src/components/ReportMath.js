@@ -28,7 +28,7 @@ export const sendReportAction = async ({ request }) => {
     return null;
   } else {
     // put db url here !! //
-    return fetch("http://localhost:3001/report", {
+    return fetch("http://localhost:3001 /report", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

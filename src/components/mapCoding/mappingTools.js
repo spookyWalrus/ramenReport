@@ -8,7 +8,7 @@ import { Loader } from "@googlemaps/js-api-loader";
 let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
 
 //========= set up googlemaps api services =========
-async function setMapServices() {
+export async function setMapServices() {
   const loader = new Loader({
     apiKey: YOUR_API_KEY,
     libraries: ["places", "marker"],
@@ -23,6 +23,7 @@ async function setMapServices() {
 // ===== google api call to search for restos =====
 export async function getRatings(cityCoords) {
   let theMap = await setMapServices();
+
   return new Promise((resolve, reject) => {
     let request = {
       location: new window.google.maps.Circle(cityCoords),
@@ -45,9 +46,8 @@ async function revGeoCoder(coordinates) {
     lat: parseFloat(coordinates.lat),
     lng: parseFloat(coordinates.lng),
   };
-
   const geocoder = new window.google.maps.Geocoder();
-  return new Promise((resolve, reject) => {
+  return new Promise(function (resolve, reject) {
     geocoder.geocode({ location: latlng }, (results, status) => {
       if (status === "OK") {
         const address = results[0].address_components[2].long_name;
@@ -63,7 +63,6 @@ async function revGeoCoder(coordinates) {
 
 // =========== check if cityWide or nearby search + check if user is logged in   ====
 export async function checkCityWide(signedIn) {
-  console.log("signedIn? ", signedIn);
   if (signedIn) {
     if (checkAccess()) {
       try {
@@ -108,7 +107,6 @@ async function getUser() {
     navigator.geolocation.getCurrentPosition(resolve, reject, options);
   })
     .then((response) => {
-      console.log("response is: ", response);
       let geoloc = {
         lat: response.coords.latitude,
         lng: response.coords.longitude,
