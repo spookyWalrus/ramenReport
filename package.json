@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build", 
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -59,3 +59,4 @@
     "@faker-js/faker": "^8.0.2"
   }
 }
+
