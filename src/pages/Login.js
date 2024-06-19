@@ -41,19 +41,18 @@ export default function Login() {
         <div className="loginBlock">
           <Form method="post" action="/register">
             <h2>This is the Register</h2>
-            <label for="userName">
+            <label htmlFor="userName">
               <span>User name</span>
             </label>
-            <input type="text" name="userName" required />
-            <label for="email">
+            <input type="text" name="userName" id="userName" required />
+            <label htmlFor="email">
               <span>Email</span>
             </label>
-            <input type="email" name="email" required />
-
-            <label for="passsword">
+            <input type="email" name="email" id="email" required />
+            <label htmlFor="passsword">
               <span>Password</span>
             </label>
-            <input type="password" name="password" required />
+            <input type="password" name="password" id="password" required />
 
             <input type="hidden" name="logreg" value="register" />
             <button type="submit" className="signUpButton">
@@ -72,14 +71,14 @@ export default function Login() {
         <div className="loginBlock">
           <Form method="post" action="/login">
             <h2>This is the Log in</h2>
-            <label for="email">
+            <label htmlFor="email">
               <span>Email</span>
             </label>
-            <input type="email" name="email" required />
-            <label for="passsword">
+            <input type="email" name="email" id="email" required />
+            <label htmlFor="passsword">
               <span>Password</span>
             </label>
-            <input type="password" name="password" required />
+            <input type="password" name="password" id="password" required />
 
             <input type="hidden" name="logreg" value="login" />
             <button type="submit" className="signUpButton">
@@ -96,4 +95,3 @@ export default function Login() {
     );
   }
 }
-
