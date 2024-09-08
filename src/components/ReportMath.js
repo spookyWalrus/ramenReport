@@ -28,19 +28,23 @@ export const sendReportAction = async ({ request }) => {
     return null;
   } else {
     // put db url here !! //
-    return fetch("http://localhost:3001 /report", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: report.email,
-        resto: report.resto,
-        noodles: report.noodles,
-        soup: report.soup,
-        toppings: report.toppings,
-        experience: report.experience,
-        comments: report.comments,
-      }),
-    })
+    return fetch(
+      "https://ramenreportserver.onrender.com/report",
+      // "http://localhost:3001 /report",
+      {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: report.email,
+          resto: report.resto,
+          noodles: report.noodles,
+          soup: report.soup,
+          toppings: report.toppings,
+          experience: report.experience,
+          comments: report.comments,
+        }),
+      }
+    )
       .then((res) => {
         if (res.ok) {
           // check for succesful credentials
