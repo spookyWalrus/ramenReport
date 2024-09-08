@@ -8,7 +8,6 @@ import PulseLoader from "react-spinners/PulseLoader";
 // import loopData from '../../json/json2DB.js';
 
 let YOUR_API_KEY = process.env.REACT_APP_MAPS_KEY;
-
 // const ramenIcon = {url: "https://cdn3.iconfinder.com/data/icons/japan-23/64/ramen-noodles-food-soup-bowl-512.png",
 //       scaledSize: new window.google.maps.Size(25,25)}
 

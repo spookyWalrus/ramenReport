@@ -23,8 +23,8 @@ function ratingFetch(city) {
   data[1] = user;
   // === get ratings data ====
   return fetch(
-    // 'https://ramenreportserver.onrender.com/render/ratings',
-    "http://localhost:3001/ratings",
+    "https://ramenreportserver.onrender.com/ratings",
+    // "http://localhost:3001/ratings",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
