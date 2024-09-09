@@ -1,66 +1,39 @@
-import React, { useState} from "react";
-import MyRating from '../components/mapCoding/mapPlaces-rating';
-import './Ratings.css';
-import './Report.css';
-import '../components/mapCoding/mapApp.css';
-
-import RamenChart from '../components/chart.js';
-
+import React, { useState } from "react";
+import FindRating from "../components/mapCoding/mapPlaces-rating";
+import "./Ratings.css";
+import "./Report.css";
+import "../components/mapCoding/mapApp.css";
+import RamenChart from "../components/chart.js";
 
 export default function Ratings() {
-  const [theRatings,setTheRatings] = useState([]);
+  const [theRatings, setTheRatings] = useState([]);
 
-  const restoRatings =((ratingsData)=>{
-    console.log('got data from MyRating: ',ratingsData);
-    setTheRatings(ratingsData);
-  })
-  console.log('ratings length: ',theRatings.length);
+  const restoRatings = (ratingsData) => {
+    // console.log("the ratings db data:", ratingsData[0]);
+    // console.log("the ratings maps data:", ratingsData[1]);
 
-   let ratingBlock = 'ratingBlock';
-  if(theRatings.length === 0){
-    ratingBlock += ' hideRatingBlock';
-  }else if(theRatings.length > 0){
-    ratingBlock += ' showRatingBlock';
-  }
+    setTheRatings(ratingsData[0]);
+  };
 
-  // if(theRatings){
-  //   console.log('theRatings set: ',theRatings);
-    return (
-      <div className="ratingBack">
-        <section className="reportIntro">
-          <h1 className="reportHeading">The Ramen Ratings
-          </h1>
-        </section>
-        <section className="ratingSection">
-          <div className="menuBlock">
-            <MyRating restoRatings={restoRatings}/>
-          </div>
-          <div className={ratingBlock}>
-            <div class="chart-container">
-                <h3>Best Ramen in your area</h3>
-                    {theRatings.length>1 ? 
-                    <RamenChart dbratings={theRatings}/> 
-                    : <RamenChart />
-                    } 
+  return (
+    <div className="ratingBack">
+      <section className="reportIntro">
+        <h1 className="reportHeading">The Ramen Ratings</h1>
+      </section>
+      <section className="ratingSection">
+        <div className="menuBlock">
+          <FindRating restoRatings={restoRatings} />
+        </div>
+        {theRatings.length > 0 ? (
+          <div className="ratingBlock">
+            <div className="chart-container">
+              <RamenChart dbratings={theRatings} />
             </div>
           </div>
-        </section>
-      </div>
-    );
-  // }else{
-  //   console.log('theRatings empty: ',theRatings);
-  //   return (
-  //     <div className="ratingBack">
-  //       <div className="ratingIntro">
-  //         <h1 className="ratingHeading">Ramen Ratings
-  //         </h1>
-  //         <MyRating restoRatings={restoRatings}/>
-  //         <div class="chart-container">
-  //           <h3>No Ramen in your area</h3>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
+        ) : (
+          <div className="noRatingBlock"></div>
+        )}
+      </section>
+    </div>
+  );
 }
